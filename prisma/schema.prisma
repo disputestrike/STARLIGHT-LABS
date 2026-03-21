@@ -1,0 +1,897 @@
+// Starlight Labs Database Schema
+// Production-grade schema covering: talent pipeline, project delivery, sales CRM, financial tracking, admin
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ============================================================================
+// AUTHENTICATION & USER MANAGEMENT
+// ============================================================================
+
+model User {
+  id                    String     @id @default(cuid())
+  email                 String     @unique
+  password              String     // bcrypt hashed
+  firstName             String?
+  lastName              String?
+  phone                 String?
+  avatar                String?    // URL to avatar
+  role                  UserRole   @default(ENGINEER)
+  status                UserStatus @default(ACTIVE)
+  emailVerified         DateTime?
+  lastLoginAt           DateTime?
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  profile               UserProfile?
+  projects              ProjectMember[]
+  bootcampEnrollment    BootcampEnrollment?
+  engineerProfile       EngineerProfile?
+  salesActivities       SalesActivity[]
+  skills                Skill[]
+  notifications         Notification[]
+  apiTokens             ApiToken[]
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+}
+
+model UserProfile {
+  id                    String     @id @default(cuid())
+  userId                String     @unique
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  bio                   String?
+  location              String?
+  timezone              String?    @default("UTC")
+  department            String?
+  title                 String?
+  manager               String?
+  
+  // Preferences
+  notificationPrefs     Json?      // Email, Slack, SMS preferences
+  preferences           Json?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([userId])
+}
+
+model ApiToken {
+  id                    String     @id @default(cuid())
+  userId                String
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name                  String
+  token                 String     @unique // hashed
+  lastUsedAt            DateTime?
+  expiresAt             DateTime?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([token])
+}
+
+// ============================================================================
+// TALENT MANAGEMENT & ACADEMY
+// ============================================================================
+
+model BootcampProgram {
+  id                    String     @id @default(cuid())
+  name                  String     @unique // "Cohort 1 Q1 2024"
+  description           String?
+  curriculum            String     // "React", "Node.js", "Full-Stack"
+  
+  status                CohortStatus @default(RECRUITING)
+  startDate             DateTime
+  endDate               DateTime
+  maxEnrollees          Int        @default(30)
+  
+  instructors           String[]   // User IDs
+  requirements          Json?      // Curriculum requirements
+  syllabus              Json?      // Week-by-week content
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  enrollments           BootcampEnrollment[]
+  assessments           BootcampAssessment[]
+
+  @@index([status])
+  @@index([startDate])
+}
+
+model BootcampEnrollment {
+  id                    String     @id @default(cuid())
+  userId                String     @unique
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  cohortId              String
+  cohort                BootcampProgram @relation(fields: [cohortId], references: [id], onDelete: Cascade)
+  
+  status                EnrollmentStatus @default(ENROLLED
+  screeningScore        Int?       // 0-100
+  techScore             Int?       // 0-100
+  aptitudeScore         Int?       // 0-100
+  
+  capstonProject        String?    // Project URL/repo
+  capstoneScore         Int?       // 0-100
+  
+  graduatedAt           DateTime?
+  placedAt              DateTime?
+  placementRole         String?    // "Junior Dev", "QA", etc
+  placementCompany      String?    // Company placed at
+  placementSalary       Int?       // Monthly salary in local currency
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  assessments           BootcampAssessment[]
+
+  @@index([cohortId])
+  @@index([userId])
+  @@index([status])
+}
+
+model BootcampAssessment {
+  id                    String     @id @default(cuid())
+  enrollmentId          String
+  enrollment            BootcampEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  
+  cohortId              String
+  cohort                BootcampProgram @relation(fields: [cohortId], references: [id], onDelete: Cascade)
+  
+  assessmentType        String     // "week1", "week4", "capstone", "final"
+  score                 Int        // 0-100
+  feedback              String?
+  assessedAt            DateTime
+  
+  createdAt             DateTime   @default(now())
+
+  @@index([enrollmentId])
+  @@index([cohortId])
+}
+
+model EngineerProfile {
+  id                    String     @id @default(cuid())
+  userId                String     @unique
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  status                EmploymentStatus @default(BENCH)
+  seniority             SeniorityLevel @default(JUNIOR
+  
+  yearsOfExperience     Int        @default(0)
+  specializations       String[]   // ["React", "Node.js", "Python"]
+  portfolio             String?    // URL
+  github                String?
+  linkedin              String?
+  
+  certifications        String[]   // ["AWS", "Google Cloud", etc]
+  hourlyRate            Int?       // USD
+  monthlyRate           Int?       // Local currency
+  
+  utilization           Float      @default(0) // 0-100%
+  utilizationStartDate  DateTime?
+  
+  performanceRating     Float?     // 1-5
+  lastReviewDate        DateTime?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  skills                Skill[]
+  projects              ProjectMember[]
+
+  @@index([status])
+  @@index([seniority])
+}
+
+model Skill {
+  id                    String     @id @default(cuid())
+  name                  String     // "React", "PostgreSQL", etc
+  category              String     // "Frontend", "Backend", "Database"
+  proficiencyLevel      Int        @default(1) // 1-5
+  yearsOfExperience     Int?
+  lastUsedAt            DateTime?
+  
+  // Relations
+  users                 User[]
+  engineers             EngineerProfile[]
+
+  @@unique([name, category])
+}
+
+// ============================================================================
+// PROJECT DELIVERY & SPRINT MANAGEMENT
+// ============================================================================
+
+model Project {
+  id                    String     @id @default(cuid())
+  name                  String
+  description           String?
+  status                ProjectStatus @default(PLANNING)
+  
+  clientId              String
+  client                Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  deliveryLeadId        String?
+  deliveryLead          User?      @relation(fields: [deliveryLeadId], references: [id], onDelete: SetNull)
+  
+  startDate             DateTime
+  targetEndDate         DateTime
+  actualEndDate         DateTime?
+  
+  budget                Int        // USD
+  budgetUsed            Int        @default(0)
+  revenue               Int        @default(0)
+  
+  scope                 String?    // Project scope document
+  statement_of_work     String?    // SOW URL
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  members               ProjectMember[]
+  sprints               Sprint[]
+  tasks                 Task[]
+  deliverables          Deliverable[]
+  risks                 ProjectRisk[]
+
+  @@index([clientId])
+  @@index([status])
+  @@index([startDate])
+}
+
+model ProjectMember {
+  id                    String     @id @default(cuid())
+  projectId             String
+  project               Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  userId                String
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  role                  ProjectRole @default(DEVELOPER)
+  allocatedHours        Int        @default(40) // weekly
+  allocatedPercentage   Int        @default(100)
+  
+  joinedAt              DateTime   @default(now())
+  leftAt                DateTime?
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+}
+
+model Sprint {
+  id                    String     @id @default(cuid())
+  projectId             String
+  project               Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  sprintNumber          Int
+  status                SprintStatus @default(PLANNING)
+  
+  startDate             DateTime
+  endDate               DateTime
+  
+  goal                  String?
+  plannedStoryPoints    Int        @default(0)
+  completedStoryPoints  Int        @default(0)
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  tasks                 Task[]
+
+  @@unique([projectId, sprintNumber])
+  @@index([projectId])
+  @@index([status])
+}
+
+model Task {
+  id                    String     @id @default(cuid())
+  projectId             String
+  project               Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  sprintId              String?
+  sprint                Sprint?    @relation(fields: [sprintId], references: [id], onDelete: SetNull)
+  
+  title                 String
+  description           String?
+  
+  type                  TaskType   @default(FEATURE)
+  priority              Priority   @default(MEDIUM)
+  status                TaskStatus @default(TODO)
+  
+  storyPoints           Int        @default(0)
+  estimatedHours        Int        @default(0)
+  actualHours           Int?
+  
+  assigneeId            String?
+  
+  dueDate               DateTime?
+  completedAt           DateTime?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  comments              TaskComment[]
+  attachments           TaskAttachment[]
+
+  @@index([projectId])
+  @@index([sprintId])
+  @@index([status])
+  @@index([priority])
+}
+
+model TaskComment {
+  id                    String     @id @default(cuid())
+  taskId                String
+  task                  Task       @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  
+  authorId              String
+  content               String
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([taskId])
+  @@index([authorId])
+}
+
+model TaskAttachment {
+  id                    String     @id @default(cuid())
+  taskId                String
+  task                  Task       @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  
+  filename              String
+  url                   String
+  fileSize              Int
+  mimeType              String
+  
+  uploadedAt            DateTime   @default(now())
+
+  @@index([taskId])
+}
+
+model Deliverable {
+  id                    String     @id @default(cuid())
+  projectId             String
+  project               Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  name                  String
+  description           String?
+  status                DeliverableStatus @default(PENDING)
+  
+  dueDate               DateTime
+  deliveredAt           DateTime?
+  
+  acceptanceUrl         String?    // Staging URL for client review
+  clientNotes           String?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([projectId])
+  @@index([status])
+}
+
+model ProjectRisk {
+  id                    String     @id @default(cuid())
+  projectId             String
+  project               Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  title                 String
+  description           String?
+  severity              RiskSeverity @default(MEDIUM)
+  status                RiskStatus @default(OPEN)
+  
+  mitigation            String?
+  owner                 String?
+  
+  createdAt             DateTime   @default(now())
+  resolvedAt            DateTime?
+
+  @@index([projectId])
+  @@index([severity])
+  @@index([status])
+}
+
+// ============================================================================
+// SALES & CRM
+// ============================================================================
+
+model Client {
+  id                    String     @id @default(cuid())
+  name                  String
+  industry              String?
+  website               String?
+  
+  status                ClientStatus @default(PROSPECT)
+  
+  // Contact Info
+  contactName           String?
+  contactEmail          String?
+  contactPhone          String?
+  
+  // Address
+  addressStreet         String?
+  addressCity           String?
+  addressState          String?
+  addressZip            String?
+  addressCountry        String?
+  
+  // Relationship
+  accountOwner          String?    // User ID
+  budget                Int?       // Annual IT budget
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  projects              Project[]
+  deals                 Deal[]
+  contacts              ClientContact[]
+
+  @@index([status])
+  @@index([name])
+}
+
+model ClientContact {
+  id                    String     @id @default(cuid())
+  clientId              String
+  client                Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  name                  String
+  email                 String
+  phone                 String?
+  title                 String?
+  
+  isPrimary             Boolean    @default(false)
+  
+  createdAt             DateTime   @default(now())
+
+  @@index([clientId])
+}
+
+model Deal {
+  id                    String     @id @default(cuid())
+  clientId              String
+  client                Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  title                 String
+  description           String?
+  
+  stage                 DealStage  @default(QUALIFIED)
+  status                DealStatus @default(OPEN)
+  
+  value                 Int        // USD
+  probability           Int        @default(50) // 0-100%
+  expectedRevenue       Int        @default(0)  // value * (probability/100)
+  
+  closedDate            DateTime?
+  actualCloseDate       DateTime?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  activities            SalesActivity[]
+
+  @@index([clientId])
+  @@index([stage])
+  @@index([status])
+}
+
+model SalesActivity {
+  id                    String     @id @default(cuid())
+  dealId                String
+  deal                  Deal       @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  
+  userId                String
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type                  ActivityType @default(NOTE)
+  subject               String?
+  notes                 String?
+  
+  outcomeResult         OutcomeResult? @default(PENDING)
+  
+  scheduledFor          DateTime?
+  completedAt           DateTime?
+  
+  createdAt             DateTime   @default(now())
+
+  @@index([dealId])
+  @@index([userId])
+  @@index([type])
+}
+
+// ============================================================================
+// FINANCIAL TRACKING
+// ============================================================================
+
+model Invoice {
+  id                    String     @id @default(cuid())
+  invoiceNumber         String     @unique // INV-2024-001
+  
+  projectId             String?
+  project               Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  
+  clientId              String?
+  client                Client?    @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  
+  status                InvoiceStatus @default(DRAFT)
+  
+  issueDate             DateTime
+  dueDate               DateTime
+  paidDate              DateTime?
+  
+  subtotal              Int        // USD cents
+  taxAmount             Int
+  discountAmount        Int        @default(0)
+  totalAmount           Int
+  
+  description           String?
+  notes                 String?
+  
+  paymentMethod         String?
+  
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  // Relations
+  lineItems             InvoiceLineItem[]
+
+  @@index([status])
+  @@index([invoiceNumber])
+  @@index([dueDate])
+}
+
+model InvoiceLineItem {
+  id                    String     @id @default(cuid())
+  invoiceId             String
+  invoice               Invoice    @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  description           String
+  quantity              Int
+  unitPrice             Int        // USD cents
+  totalPrice            Int
+  
+  createdAt             DateTime   @default(now())
+
+  @@index([invoiceId])
+}
+
+model Expense {
+  id                    String     @id @default(cuid())
+  projectId             String?
+  project               Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  
+  category              ExpenseCategory @default(OTHER)
+  description           String
+  amount                Int        // USD cents
+  
+  date                  DateTime
+  status                ExpenseStatus @default(PENDING)
+  
+  createdAt             DateTime   @default(now())
+  approvedAt            DateTime?
+
+  @@index([projectId])
+  @@index([category])
+  @@index([status])
+}
+
+model Payroll {
+  id                    String     @id @default(cuid())
+  userId                String     @unique
+  
+  monthYear             String     @unique // "2024-01"
+  
+  baseSalary            Int        // Local currency
+  bonus                 Int        @default(0)
+  deductions            Int        @default(0)
+  
+  employerPension       Int        // 10% in Nigeria
+  employerNsitf         Int        // 1% in Nigeria
+  employerTax           Int        @default(0)
+  
+  netAmount             Int
+  status                PayrollStatus @default(PENDING)
+  
+  processedAt           DateTime?
+  paidAt                DateTime?
+
+  @@index([monthYear])
+  @@index([status])
+}
+
+// ============================================================================
+// OPERATIONS & ADMIN
+// ============================================================================
+
+model Dashboard {
+  id                    String     @id @default(cuid())
+  name                  String     @unique
+  
+  // KPIs
+  totalEngineers        Int        @default(0)
+  activeProjects        Int        @default(0)
+  monthlyRevenue        Int        @default(0)
+  utilizationRate       Float      @default(0) // 0-100%
+  
+  // Metrics
+  burnRate              Int        @default(0)
+  runway                Int        @default(0) // months
+  grossMargin           Float      @default(0) // %
+  
+  lastUpdated           DateTime   @default(now())
+
+  @@index([name])
+}
+
+model AuditLog {
+  id                    String     @id @default(cuid())
+  userId                String?
+  action                String     // "CREATE", "UPDATE", "DELETE"
+  entityType            String     // "User", "Project", "Invoice"
+  entityId              String
+  oldValues             Json?
+  newValues             Json?
+  
+  ipAddress             String?
+  userAgent             String?
+  
+  createdAt             DateTime   @default(now())
+
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model Notification {
+  id                    String     @id @default(cuid())
+  userId                String
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title                 String
+  message               String
+  type                  NotificationType @default(INFO)
+  
+  read                  Boolean    @default(false)
+  readAt                DateTime?
+  
+  actionUrl             String?
+  
+  createdAt             DateTime   @default(now())
+
+  @@index([userId])
+  @@index([read])
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum UserRole {
+  ADMIN
+  DELIVERY_LEAD
+  PROJECT_MANAGER
+  QA_LEAD
+  ENGINEER
+  SDR
+  ACCOUNT_EXECUTIVE
+  TALENT_MANAGER
+  FOUNDER
+  FINANCE
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum CohortStatus {
+  RECRUITING
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  APPLIED
+  SCREENING
+  INTERVIEWED
+  ENROLLED
+  IN_PROGRESS
+  COMPLETED
+  GRADUATED
+  PLACED
+  DROPPED
+}
+
+enum EmploymentStatus {
+  BENCH
+  BILLABLE
+  INTERNAL_PROJECT
+  TRAINING
+  ON_LEAVE
+  TERMINATED
+}
+
+enum SeniorityLevel {
+  JUNIOR
+  MID
+  SENIOR
+  STAFF
+  LEAD
+}
+
+enum ProjectStatus {
+  PLANNING
+  SETUP
+  IN_PROGRESS
+  ON_HOLD
+  IN_REVIEW
+  COMPLETED
+  ARCHIVED
+}
+
+enum ProjectRole {
+  DEVELOPER
+  PROJECT_MANAGER
+  QA
+  DEVOPS
+  DESIGNER
+  PRODUCT_OWNER
+  TECH_LEAD
+}
+
+enum SprintStatus {
+  PLANNING
+  ACTIVE
+  IN_REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskType {
+  FEATURE
+  BUG
+  IMPROVEMENT
+  TECHNICAL_DEBT
+  DOCUMENTATION
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+  BLOCKED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum DeliverableStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+}
+
+enum RiskSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum RiskStatus {
+  OPEN
+  MITIGATED
+  RESOLVED
+  CLOSED
+}
+
+enum ClientStatus {
+  PROSPECT
+  QUALIFIED
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum DealStage {
+  LEAD
+  QUALIFIED
+  PROPOSAL
+  NEGOTIATION
+  CLOSED_WON
+  CLOSED_LOST
+}
+
+enum DealStatus {
+  OPEN
+  CLOSED
+}
+
+enum ActivityType {
+  CALL
+  EMAIL
+  MEETING
+  DEMO
+  NOTE
+  PROPOSAL
+}
+
+enum OutcomeResult {
+  PENDING
+  POSITIVE
+  NEGATIVE
+  FOLLOW_UP
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum ExpenseCategory {
+  INFRASTRUCTURE
+  TOOLS
+  TRAINING
+  TRAVEL
+  MARKETING
+  OTHER
+}
+
+enum ExpenseStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum PayrollStatus {
+  PENDING
+  PROCESSED
+  PAID
+  FAILED
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+}
