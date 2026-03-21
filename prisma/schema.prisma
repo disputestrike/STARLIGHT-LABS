@@ -38,6 +38,7 @@ model User {
   skills                Skill[]
   notifications         Notification[]
   apiTokens             ApiToken[]
+  projectsAsDeliveryLead Project[]
 
   @@index([email])
   @@index([role])
@@ -200,7 +201,6 @@ model EngineerProfile {
 
   // Relations
   skills                Skill[]
-  projects              ProjectMember[]
 
   @@index([status])
   @@index([seniority])
@@ -257,6 +257,8 @@ model Project {
   tasks                 Task[]
   deliverables          Deliverable[]
   risks                 ProjectRisk[]
+  invoices              Invoice[]
+  expenses              Expense[]
 
   @@index([clientId])
   @@index([status])
@@ -454,6 +456,7 @@ model Client {
   projects              Project[]
   deals                 Deal[]
   contacts              ClientContact[]
+  invoices              Invoice[]
 
   @@index([status])
   @@index([name])
