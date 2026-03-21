@@ -48,7 +48,10 @@
     "dotenv": "^16.3.0",
     "pg": "^8.11.0",
     "jsonwebtoken": "^9.1.0",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "resend": "^3.0.0",
+    "speakeasy": "^2.0.0",
+    "qrcode": "^1.5.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
@@ -65,7 +68,8 @@
     "ts-jest": "^29.1.0",
     "bcryptjs": "^2.4.3",
     "artillery": "^2.0.0",
-    "autocannon": "^7.10.0"
+    "autocannon": "^7.10.0",
+    "swagger-ui-react": "^5.11.0"
   },
   "engines": {
     "node": ">=18.17"
