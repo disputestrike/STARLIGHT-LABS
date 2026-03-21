@@ -57,8 +57,14 @@ model UserProfile {
   manager               String?
   
   // Preferences
-  notificationPrefs     Json?      // Email, Slack, SMS preferences
+  notificationPreferences Json?      // Email, Slack, SMS preferences
   preferences           Json?
+  
+  // 2FA Settings
+  twoFactorEnabled      Boolean    @default(false)
+  twoFactorSecret       String?
+  twoFactorBackupCodes  String[]   @default([])
+  twoFactorVerifiedAt   DateTime?
   
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
@@ -121,7 +127,7 @@ model BootcampEnrollment {
   cohortId              String
   cohort                BootcampProgram @relation(fields: [cohortId], references: [id], onDelete: Cascade)
   
-  status                EnrollmentStatus @default(ENROLLED
+  status                EnrollmentStatus @default(ENROLLED)
   screeningScore        Int?       // 0-100
   techScore             Int?       // 0-100
   aptitudeScore         Int?       // 0-100
@@ -171,7 +177,7 @@ model EngineerProfile {
   user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   status                EmploymentStatus @default(BENCH)
-  seniority             SeniorityLevel @default(JUNIOR
+  seniority             SeniorityLevel @default(JUNIOR)
   
   yearsOfExperience     Int        @default(0)
   specializations       String[]   // ["React", "Node.js", "Python"]

@@ -7,10 +7,36 @@
 
 ### Prerequisites
 - Node.js 18.17 or later
-- PostgreSQL database
+- **PostgreSQL 12+** (REQUIRED - See database setup below)
 - Git
+- Docker (optional, recommended for PostgreSQL)
 
-### Installation
+### Database Setup (Choose One)
+
+#### Option A: Docker (Easiest - 1 minute)
+```bash
+# Start PostgreSQL with Docker
+docker-compose up -d
+
+# Initialize database
+./scripts/quick-db-setup.sh
+```
+
+#### Option B: PostgreSQL Locally
+```bash
+# macOS
+brew install postgresql@14
+brew services start postgresql@14
+createdb starlight_labs
+
+# Linux
+sudo apt-get install postgresql postgresql-contrib
+sudo -u postgres createdb starlight_labs
+
+# Windows: Download https://www.postgresql.org/download/windows/
+```
+
+### Installation & Setup
 
 ```bash
 # Clone repository
@@ -23,9 +49,11 @@ npm install
 # Setup environment variables
 cp .env.example .env.local
 
-# Setup database
-npx prisma migrate dev
-npx prisma db seed
+# Initialize database (creates all tables)
+npx prisma migrate dev --name init
+
+# (Optional) Seed with sample data
+npm run db:seed
 
 # Start development server
 npm run dev
@@ -33,18 +61,54 @@ npm run dev
 
 Visit `http://localhost:3000` to see the application.
 
+**Test Credentials (if seeded):**
+- Email: `admin@starlabs.dev`
+- Password: `Admin123!`
+
+### Database Browser
+
+View and manage database:
+```bash
+npx prisma studio
+# Opens http://localhost:5555
+```
+
+## 📚 Database Documentation
+
+**IMPORTANT:** Starlight Labs requires **PostgreSQL**. NOT compatible with MySQL, MongoDB, or SQLite.
+
+See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for complete database documentation.
+
+Key tables created (40+ models):
+- User management & authentication (User, UserProfile, ApiToken)
+- Talent pipeline (BootcampProgram, BootcampEnrollment, EngineerProfile, Skill)
+- Project delivery (Project, Sprint, Task, Deliverable, ProjectRisk)
+- Sales CRM (Client, Deal, SalesActivity)
+- Financial (Invoice, Expense, Payroll)
+- Operations (AuditLog, Notification, Dashboard)
+
 ## 📋 Environment Variables
 
 Required environment variables in `.env.local`:
 
 ```bash
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/starlabs
+# DATABASE (REQUIRED) - Choose format for your setup:
+
+# Local/Docker PostgreSQL:
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/starlight_labs"
+
+# Docker Compose:
+DATABASE_URL="postgresql://postgres:postgres@postgres:5432/starlight_labs"
+
+# Production (Railway/AWS/etc):
+DATABASE_URL="postgresql://user:password@host:port/database"
 
 # Authentication
-JWT_SECRET=your-secret-key-change-in-production
+JWT_SECRET=your-secret-key-min-32-characters
+ADMIN_SECRET=admin-secret-key
+CRON_SECRET=cron-secret-key
 
-# API Keys (optional for features)
+# Optional: API Keys
 STRIPE_SECRET_KEY=sk_test_...
 TWILIO_ACCOUNT_SID=AC...
 RESEND_API_KEY=re_...
