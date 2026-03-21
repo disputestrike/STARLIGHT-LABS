@@ -19,7 +19,10 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "load:artillery": "artillery run artillery.yml",
+    "load:k6": "k6 run load-tests/k6-script.js",
+    "load:autocannon": "autocannon -c load-tests/autocannon-config.js http://localhost:3000"
   },
   "dependencies": {
     "next": "^14.2.0",
@@ -60,7 +63,9 @@
     "@testing-library/jest-dom": "^6.1.0",
     "@testing-library/user-event": "^14.5.0",
     "ts-jest": "^29.1.0",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "artillery": "^2.0.0",
+    "autocannon": "^7.10.0"
   },
   "engines": {
     "node": ">=18.17"

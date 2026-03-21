@@ -1,0 +1,153 @@
+// artillery.yml
+# Artillery Load Testing Configuration
+# Run: npx artillery run artillery.yml
+
+config:
+  target: "{{ $processEnvironment.TARGET_URL || 'http://localhost:3000' }}"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 50
+      name: "Ramp up"
+    - duration: 60
+      arrivalRate: 100
+      name: "Sustained load"
+    - duration: 30
+      arrivalRate: 10
+      name: "Wind down"
+  defaults:
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+  variables:
+    auth_token: "{{ $randomString(50) }}"
+  processor: "./load-tests/processor.js"
+
+scenarios:
+  - name: "API Authentication Flow"
+    flow:
+      - post:
+          url: "/api/auth/register"
+          json:
+            email: "user{{ $randomNumber(1, 100000) }}@example.com"
+            password: "SecurePassword123!"
+            firstName: "Test"
+            lastName: "User"
+          capture:
+            - json: "$.token"
+              as: "token"
+      - think: 2
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "user{{ $randomNumber(1, 100000) }}@example.com"
+            password: "SecurePassword123!"
+
+  - name: "Project Management Flow"
+    flow:
+      - get:
+          url: "/api/projects"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+      - think: 1
+      - post:
+          url: "/api/projects"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+          json:
+            name: "Load Test Project {{ $randomNumber(1, 10000) }}"
+            description: "Performance testing project"
+            clientId: "client123"
+            startDate: "2024-03-21T10:00:00Z"
+            targetEndDate: "2024-06-21T10:00:00Z"
+            budget: 50000
+      - think: 2
+      - get:
+          url: "/api/projects"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+
+  - name: "Sales Pipeline Interaction"
+    flow:
+      - get:
+          url: "/api/sales/clients"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+      - think: 1
+      - get:
+          url: "/api/sales/deals"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+      - think: 1
+      - post:
+          url: "/api/sales/deals"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+          json:
+            title: "Enterprise Deal {{ $randomNumber(1, 10000) }}"
+            description: "High-value enterprise engagement"
+            clientId: "client123"
+            value: 500000
+            probability: 75
+            stage: "PROPOSAL"
+
+  - name: "Financial Operations"
+    flow:
+      - get:
+          url: "/api/financial/invoices"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+      - think: 1
+      - get:
+          url: "/api/financial/expenses"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+      - think: 1
+      - post:
+          url: "/api/financial/expenses"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+          json:
+            category: "Software"
+            description: "Cloud infrastructure costs"
+            amount: 50000
+            date: "2024-03-21T10:00:00Z"
+
+  - name: "Dashboard Real-Time Metrics"
+    flow:
+      - get:
+          url: "/api/admin/dashboard"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+      - think: 5
+      - get:
+          url: "/api/admin/audit-logs"
+          headers:
+            Authorization: "Bearer {{ auth_token }}"
+
+  - name: "Homepage Traffic"
+    flow:
+      - get:
+          url: "/"
+      - think: 3
+      - get:
+          url: "/api/health"
+
+  - name: "Page Navigation"
+    flow:
+      - get:
+          url: "/dashboard"
+      - think: 2
+      - get:
+          url: "/projects"
+      - think: 2
+      - get:
+          url: "/sales"
+      - think: 2
+      - get:
+          url: "/financial"
+      - think: 2
+      - get:
+          url: "/team"
