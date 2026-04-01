@@ -17,11 +17,13 @@ generator client {
 model User {
   id                    String     @id @default(cuid())
   email                 String     @unique
-  password              String     // bcrypt hashed
+  password              String?    // bcrypt hashed; null for OAuth-only accounts
+  name                  String?    // NextAuth / display name (OAuth)
+  image                 String?    // NextAuth profile image URL
   firstName             String?
   lastName              String?
   phone                 String?
-  avatar                String?    // URL to avatar
+  avatar                String?    // URL to avatar (legacy / app profile)
   role                  UserRole   @default(ENGINEER)
   status                UserStatus @default(ACTIVE)
   emailVerified         DateTime?
@@ -39,10 +41,51 @@ model User {
   notifications         Notification[]
   apiTokens             ApiToken[]
   projectsAsDeliveryLead Project[]
+  accounts              Account[]
+  sessions              Session[]
 
   @@index([email])
   @@index([role])
   @@index([status])
+}
+
+// NextAuth (Google OAuth) — https://next-auth.js.org/adapters/prisma
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model UserProfile {
@@ -696,8 +739,67 @@ model Notification {
 }
 
 // ============================================================================
+// MARKETING / HR — contact & career applications (PostgreSQL)
+// ============================================================================
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  subject   String
+  message   String   @db.Text
+  status    ContactSubmissionStatus @default(NEW)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+  @@index([status])
+}
+
+model CareerApplication {
+  id              String                  @id @default(cuid())
+  jobSlug         String
+  jobTitle        String
+  firstName       String
+  lastName        String
+  email           String
+  phone           String?
+  linkedInUrl     String?
+  coverLetter     String?                 @db.Text
+  resumePath      String
+  resumeMimeType  String?
+  resumeSizeBytes Int?
+  status          CareerApplicationStatus   @default(RECEIVED)
+  source          String                  @default("web")
+  notes           String?                 @db.Text
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+
+  @@index([jobSlug])
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ============================================================================
 // ENUMS
 // ============================================================================
+
+enum ContactSubmissionStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+enum CareerApplicationStatus {
+  RECEIVED
+  UNDER_REVIEW
+  SHORTLISTED
+  REJECTED
+  HIRED
+  WITHDRAWN
+}
 
 enum UserRole {
   ADMIN

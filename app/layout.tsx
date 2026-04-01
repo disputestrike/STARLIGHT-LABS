@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,9 +11,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Starlight Labs - AI-Native Talent & Delivery Platform",
+  title: {
+    default: "Starlight Labs",
+    template: "%s · Starlight Labs",
+  },
   description:
-    "Global AI-powered engineering delivery and talent pipeline platform",
+    "Global engineering delivery and talent—training, HR, and client outcomes on one operating platform.",
 };
 
 export default function RootLayout({
@@ -22,8 +26,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
-        {children}
+      <body className={`${inter.className} bg-white text-slate-900 antialiased`}>
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

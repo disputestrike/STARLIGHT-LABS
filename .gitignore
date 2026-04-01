@@ -17,6 +17,7 @@
 
 # Misc
 .DS_Store
+*.tsbuildinfo
 *.pem
 *.log
 npm-debug.log*
@@ -65,3 +66,6 @@ pids
 
 # Cache
 .cache
+
+# Uploaded resumes (local dev; use object storage in production)
+/uploads

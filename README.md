@@ -1,7 +1,10 @@
-// README.md
 # Starlight Labs - AI-Native Global Talent & Delivery Platform
 
 **Production-grade full-stack application for managing global engineering talent, project delivery, CRM, and financial operations.**
+
+## Product scope
+
+Starlight Labs is a **global** talent and delivery platform: recruit → train (academy/bootcamp) → onboard (HR & compliance) → manage squads → deploy engineers for international client work. The public marketing site lives under `app/(site)/` (multi-page: home, about, foundation, careers, contact). Applicant and contact form data is stored in **PostgreSQL** (see `ContactSubmission` and `CareerApplication` in `prisma/schema.prisma`); resume files are written under `uploads/resumes/` in development (use object storage in production).
 
 ## 🚀 Quick Start
 

@@ -23,6 +23,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    if (!user.password) {
+      return NextResponse.json(
+        { error: "This account uses Google sign-in" },
+        { status: 401 }
+      );
+    }
+
     // Verify password
     const passwordMatch = await comparePasswords(password, user.password);
     if (!passwordMatch) {
