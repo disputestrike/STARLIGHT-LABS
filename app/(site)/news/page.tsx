@@ -31,7 +31,7 @@ const items = [
     date: "2025 Q3",
     title: "Careers: Nigeria compensation transparency on open roles",
     excerpt:
-      "Public job posts now include indicative annual ranges in Nigerian Naira (₦) alongside location and role type—so candidates can plan before they apply.",
+      "Open roles now show indicative gross ranges in Nigerian naira (₦) benchmarked to local IT services and product employers—not foreign pay scales converted to ₦—alongside location and seniority context.",
   },
   {
     date: "2025 Q2",

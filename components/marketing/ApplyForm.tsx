@@ -72,7 +72,7 @@ export function ApplyForm({ job }: { job: JobPosting }) {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-md bg-[#0b5fff] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0a52cc] disabled:opacity-60"
+        className="min-h-[44px] rounded-md bg-[#0b5fff] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0a52cc] disabled:opacity-60"
       >
         {status === "loading" ? "Submitting…" : "Submit application"}
       </button>

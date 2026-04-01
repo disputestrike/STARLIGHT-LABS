@@ -24,20 +24,23 @@ export default function HomePage() {
               clients one operating system for talent, projects, CRM, and finance. Commercial terms are discussed when you
               are ready—no public pricing.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <Link
                 href="/about"
-                className="rounded-md bg-[#0b5fff] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0a52cc]"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-[#0b5fff] px-6 py-3 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-[#0a52cc]"
               >
                 About Starlight Labs
               </Link>
               <Link
                 href="/services"
-                className="rounded-md border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-slate-300 bg-white px-6 py-3 text-center text-sm font-semibold text-slate-800 transition hover:border-slate-400"
               >
                 Services & solutions
               </Link>
-              <Link href="/careers" className="rounded-md px-6 py-3 text-sm font-semibold text-[#0b5fff] hover:underline">
+              <Link
+                href="/careers"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md px-6 py-3 text-center text-sm font-semibold text-[#0b5fff] hover:underline"
+              >
                 Careers
               </Link>
             </div>

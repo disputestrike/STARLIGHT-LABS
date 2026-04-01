@@ -24,7 +24,7 @@ export default function CareerDetailPage({ params }: Props) {
   if (!job) notFound();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
       <Link href="/careers" className="text-sm font-medium text-[#0b5fff] hover:underline">
         ← All roles
       </Link>
@@ -33,28 +33,40 @@ export default function CareerDetailPage({ params }: Props) {
       <p className="mt-2 text-sm text-slate-500">
         {job.location} · {job.type}
       </p>
-      <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/90 px-4 py-3 text-sm text-slate-800">
-        <p className="font-semibold text-[#0a1628]">Compensation (Nigeria benchmark)</p>
+      <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/90 px-4 py-3 text-sm text-slate-800 sm:px-5">
+        <p className="font-semibold text-[#0a1628]">Compensation (Nigeria market)</p>
         <p className="mt-1 text-slate-700">{job.compensationNgn}</p>
         <p className="mt-2 text-xs text-slate-500">
-          Figures are indicative local ranges for planning—not an offer. Final package depends on level, interview, and role.
+          Ranges reflect typical gross pay for similar roles in Nigerian IT services and product employers (Lagos / major
+          hubs)—not foreign salaries converted to naira. Final offer depends on interview, level, and budget.
         </p>
       </div>
-      <p className="mt-8 text-lg leading-relaxed text-slate-600">{job.summary}</p>
+      <p className="mt-8 text-base leading-relaxed text-slate-600 sm:text-lg">{job.summary}</p>
 
-      <h2 className="mt-12 text-lg font-semibold text-[#0a1628]">Responsibilities</h2>
-      <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-600">
+      <h2 className="mt-12 text-lg font-semibold text-[#0a1628]">What you will do</h2>
+      <ul className="mt-4 list-disc space-y-2.5 pl-5 text-sm leading-relaxed text-slate-600 sm:text-base">
         {job.responsibilities.map((r) => (
           <li key={r}>{r}</li>
         ))}
       </ul>
 
-      <h2 className="mt-10 text-lg font-semibold text-[#0a1628]">Qualifications</h2>
-      <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-600">
+      <h2 className="mt-10 text-lg font-semibold text-[#0a1628]">Required qualifications</h2>
+      <ul className="mt-4 list-disc space-y-2.5 pl-5 text-sm leading-relaxed text-slate-600 sm:text-base">
         {job.qualifications.map((r) => (
           <li key={r}>{r}</li>
         ))}
       </ul>
+
+      {job.preferredQualifications?.length ? (
+        <>
+          <h2 className="mt-10 text-lg font-semibold text-[#0a1628]">Preferred qualifications</h2>
+          <ul className="mt-4 list-disc space-y-2.5 pl-5 text-sm leading-relaxed text-slate-600 sm:text-base">
+            {job.preferredQualifications.map((r) => (
+              <li key={r}>{r}</li>
+            ))}
+          </ul>
+        </>
+      ) : null}
 
       <div className="mt-14 border-t border-slate-200 pt-10">
         <h2 className="text-lg font-semibold text-[#0a1628]">Apply</h2>

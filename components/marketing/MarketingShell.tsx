@@ -31,39 +31,54 @@ const careersItems: NavDropdownItem[] = [
 
 export function MarketingShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <header className="sticky top-0 z-50 overflow-visible border-b border-slate-200/90 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 overflow-visible px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="shrink-0 text-lg font-semibold tracking-tight text-[#0a1628]">
+    <div className="min-h-screen overflow-x-hidden bg-white text-slate-900 supports-[padding:max(0px)]:pb-[env(safe-area-inset-bottom)]">
+      <header className="sticky top-0 z-50 overflow-visible border-b border-slate-200/90 bg-white/95 backdrop-blur supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
+        <div className="mx-auto flex min-h-[3.5rem] max-w-6xl items-center justify-between gap-4 overflow-visible px-4 sm:min-h-16 sm:px-6 lg:px-8">
+          <Link
+            href="/"
+            className="shrink-0 py-2 text-base font-semibold tracking-tight text-[#0a1628] sm:text-lg"
+          >
             Starlight Labs
           </Link>
           <details className="relative md:hidden">
-            <summary className="cursor-pointer list-none rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 [&::-webkit-details-marker]:hidden">
+            <summary className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 [&::-webkit-details-marker]:hidden">
               Menu
             </summary>
-            <div className="absolute right-0 z-50 mt-1 max-h-[min(80vh,520px)] w-[min(100vw-2rem,20rem)] overflow-y-auto rounded-md border border-slate-200 bg-white py-3 shadow-lg">
-              <Link href="/about" className="block px-4 py-2 text-sm text-slate-800 hover:bg-slate-50">
+            <div className="absolute right-0 z-50 mt-1 max-h-[min(80vh,520px)] w-[min(100vw-2rem,20rem)] overflow-y-auto rounded-md border border-slate-200 bg-white py-2 shadow-lg">
+              <Link href="/about" className="block min-h-[44px] px-4 py-3 text-sm text-slate-800 hover:bg-slate-50">
                 About us
               </Link>
               <p className="px-4 pt-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Services</p>
               {servicesItems.map((item) => (
-                <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block min-h-[44px] px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                >
                   {item.label}
                 </Link>
               ))}
               <p className="px-4 pt-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Industries</p>
               {industriesItems.map((item) => (
-                <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block min-h-[44px] px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                >
                   {item.label}
                 </Link>
               ))}
               <p className="px-4 pt-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Careers</p>
               {careersItems.map((item) => (
-                <Link key={item.href} href={item.href} className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block min-h-[44px] px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                >
                   {item.label}
                 </Link>
               ))}
-              <Link href="/news" className="mt-1 block px-4 py-2 text-sm text-slate-800 hover:bg-slate-50">
+              <Link href="/news" className="mt-1 block min-h-[44px] px-4 py-3 text-sm text-slate-800 hover:bg-slate-50">
                 News
               </Link>
             </div>
@@ -89,8 +104,8 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
       </header>
       <main>{children}</main>
       <footer className="border-t border-slate-200 bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
             <div className="sm:col-span-2 lg:col-span-2">
               <Link href="/" className="text-lg font-semibold text-[#0a1628]">
                 Starlight Labs

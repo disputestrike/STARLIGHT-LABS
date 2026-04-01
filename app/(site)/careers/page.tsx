@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 
 export default function CareersIndexPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20">
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5fff]">Careers</p>
-      <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[#0a1628]">Explore opportunities</h1>
+      <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[#0a1628] sm:text-4xl">Explore opportunities</h1>
       <p className="mt-4 max-w-2xl text-slate-600 leading-relaxed">
         We hire across engineering, platform, delivery, and talent. Paths include early career, experienced professionals,
         internships, and campus programs. Every application is reviewed with confidentiality and compliance in mind.
@@ -113,14 +113,14 @@ export default function CareersIndexPage() {
           <Link
             key={job.slug}
             href={`/careers/${job.slug}`}
-            className="flex flex-col gap-2 py-6 transition hover:bg-slate-50/80 sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-2 py-6 transition active:bg-slate-50/80 sm:flex-row sm:items-center sm:justify-between sm:hover:bg-slate-50/80"
           >
             <div>
               <h3 className="text-lg font-semibold text-[#0a1628]">{job.title}</h3>
               <p className="text-sm text-slate-500">
                 {job.department} · {job.location} · {job.type}
               </p>
-              <p className="mt-1 text-sm font-medium text-slate-700">{job.compensationNgn}</p>
+              <p className="mt-1 break-words text-sm font-medium text-slate-700">{job.compensationNgn}</p>
             </div>
             <span className="text-sm font-medium text-[#0b5fff]">View role →</span>
           </Link>

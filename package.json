@@ -12,6 +12,7 @@
     "build": "prisma generate && next build",
     "start": "next start -H 0.0.0.0",
     "db:migrate:deploy": "prisma migrate deploy",
+    "db:setup": "node scripts/db-setup.mjs",
     "lint": "next lint --fix",
     "type-check": "tsc --noEmit",
     "test": "jest",
