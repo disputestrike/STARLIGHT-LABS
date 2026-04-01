@@ -33,6 +33,13 @@ export default function CareerDetailPage({ params }: Props) {
       <p className="mt-2 text-sm text-slate-500">
         {job.location} · {job.type}
       </p>
+      <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/90 px-4 py-3 text-sm text-slate-800">
+        <p className="font-semibold text-[#0a1628]">Compensation (Nigeria benchmark)</p>
+        <p className="mt-1 text-slate-700">{job.compensationNgn}</p>
+        <p className="mt-2 text-xs text-slate-500">
+          Figures are indicative local ranges for planning—not an offer. Final package depends on level, interview, and role.
+        </p>
+      </div>
       <p className="mt-8 text-lg leading-relaxed text-slate-600">{job.summary}</p>
 
       <h2 className="mt-12 text-lg font-semibold text-[#0a1628]">Responsibilities</h2>

@@ -4,6 +4,8 @@ export type JobPosting = {
   department: string;
   location: string;
   type: "Full-time" | "Contract" | "Internship" | "Program";
+  /** Local benchmark in Nigerian Naira (annual unless noted). Not an offer; actual package depends on level and interview. */
+  compensationNgn: string;
   summary: string;
   responsibilities: string[];
   qualifications: string[];
@@ -14,14 +16,15 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "ai-ml-engineer",
     title: "AI / ML Engineer",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote (global clients)",
     type: "Full-time",
+    compensationNgn: "₦18,000,000 – ₦38,000,000 / year (level-dependent; Lagos benchmark)",
     summary:
-      "Design, train, and ship ML models and AI-assisted features alongside client squads—production focus, not slide decks.",
+      "Design, train, and ship ML models and production features alongside client squads—emphasis on reliability and evaluation, not slide decks.",
     responsibilities: [
       "Own model lifecycle from data readiness through deployment and monitoring",
       "Partner with software engineers on APIs, feature stores, and evaluation",
-      "Apply responsible-AI practices for client-regulated environments",
+      "Apply responsible practices for regulated client environments",
     ],
     qualifications: [
       "Strong Python; experience with modern ML frameworks",
@@ -33,8 +36,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "ml-engineer-production",
     title: "Machine Learning Engineer (Production)",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦16,000,000 – ₦34,000,000 / year",
     summary:
       "Bridge research and operations: ship reliable inference, pipelines, and observability at scale.",
     responsibilities: [
@@ -52,8 +56,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "full-stack-engineer",
     title: "Full Stack Engineer",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦12,000,000 – ₦28,000,000 / year",
     summary:
       "End-to-end delivery across modern web stacks, APIs, and data layers for client products.",
     responsibilities: [
@@ -71,8 +76,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "backend-engineer",
     title: "Backend Engineer",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦12,000,000 – ₦26,000,000 / year",
     summary:
       "Design resilient services, data access patterns, and integration layers for enterprise systems.",
     responsibilities: [
@@ -90,8 +96,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "frontend-engineer",
     title: "Frontend Engineer",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦11,000,000 – ₦24,000,000 / year",
     summary:
       "Craft accessible, performant UIs and design systems that scale across client products.",
     responsibilities: [
@@ -109,8 +116,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "devops-engineer",
     title: "DevOps Engineer",
     department: "Platform",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦14,000,000 – ₦30,000,000 / year",
     summary:
       "Automate infrastructure, CI/CD, and release pipelines so squads ship safely and often.",
     responsibilities: [
@@ -128,8 +136,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "site-reliability-engineer",
     title: "Site Reliability Engineer (SRE)",
     department: "Platform",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦15,000,000 – ₦32,000,000 / year",
     summary:
       "Own reliability targets, SLIs/SLOs, and operational excellence for critical services.",
     responsibilities: [
@@ -147,8 +156,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "technical-project-manager",
     title: "Technical Project Manager",
     department: "Delivery",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / client travel as needed",
     type: "Full-time",
+    compensationNgn: "₦14,000,000 – ₦28,000,000 / year",
     summary:
       "Drive planning, dependencies, and stakeholder alignment for complex engineering programs.",
     responsibilities: [
@@ -166,8 +176,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "delivery-manager",
     title: "Delivery Manager",
     department: "Delivery",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦16,000,000 – ₦32,000,000 / year",
     summary:
       "Accountable for outcomes across multiple squads: velocity, quality, and client satisfaction.",
     responsibilities: [
@@ -185,8 +196,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "special-projects-lead",
     title: "Special Projects Lead",
     department: "Delivery",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid",
     type: "Full-time",
+    compensationNgn: "₦20,000,000 – ₦42,000,000 / year",
     summary:
       "Lead high-ambiguity initiatives: cross-functional workstreams, proofs of concept, and strategic bets.",
     responsibilities: [
@@ -204,8 +216,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "solutions-architect",
     title: "Solutions Architect",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦22,000,000 – ₦45,000,000 / year",
     summary:
       "Shape technical direction for engagements: architecture, integration, and feasibility.",
     responsibilities: [
@@ -223,10 +236,11 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "data-engineer",
     title: "Data Engineer",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦13,000,000 – ₦28,000,000 / year",
     summary:
-      "Build reliable data pipelines, warehouses, and governance for analytics and AI workloads.",
+      "Build reliable data pipelines, warehouses, and governance for analytics and ML workloads.",
     responsibilities: [
       "Design ingestion, transformation, and quality frameworks",
       "Partner with analytics and ML on contracts and SLAs",
@@ -242,8 +256,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "qa-automation-engineer",
     title: "QA Automation Engineer",
     department: "Engineering",
-    location: "Remote · Global",
+    location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
+    compensationNgn: "₦9,000,000 – ₦20,000,000 / year",
     summary:
       "Raise quality through automated testing, tooling, and release discipline.",
     responsibilities: [
@@ -261,8 +276,9 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "college-intern-engineering",
     title: "College Intern — Engineering",
     department: "Talent",
-    location: "Hybrid · Program",
+    location: "Lagos · Nigeria · Program",
     type: "Internship",
+    compensationNgn: "₦180,000 – ₦350,000 / month stipend (program & cohort dependent)",
     summary:
       "Structured summer or semester program for students pursuing CS, CE, or related fields.",
     responsibilities: [
@@ -280,10 +296,11 @@ export const JOB_POSTINGS: JobPosting[] = [
     slug: "career-day-campus",
     title: "Career Day & Campus Programs",
     department: "Talent",
-    location: "Events · Global",
+    location: "Nigeria & select regions · Events",
     type: "Program",
+    compensationNgn: "Varies by event — stipends or volunteer roles listed per posting",
     summary:
-      "Partner with universities and communities for career days, panels, and recruiting events—not a single role; we maintain a pipeline for expressions of interest.",
+      "Partner with universities and communities for career days, panels, and recruiting events—pipeline for expressions of interest.",
     responsibilities: [
       "Represent Starlight Labs at scheduled events",
       "Engage students and share our delivery model",

@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from "react";
 
+/** Rotating emphasis lines—value and delivery, not product buzzwords. */
 const HEADLINES = [
   {
-    kicker: "Engineering the future of global talent",
+    kicker: "Global delivery · Talent operations",
     title: "Outcomes you can measure—teams you can trust.",
   },
   {
-    kicker: "Navigate your next delivery chapter",
-    title: "From develop to deploy: one disciplined path to client value.",
+    kicker: "Clarity in capacity and cost",
+    title: "One honest view of talent, projects, and commercial reality.",
   },
   {
-    kicker: "AI-first value, human-led execution",
-    title: "Models and software in production—not slideware—with responsible guardrails.",
+    kicker: "From bench to billable",
+    title: "Structured programs, accountable leadership, and delivery that holds up with enterprise clients.",
   },
 ] as const;
 

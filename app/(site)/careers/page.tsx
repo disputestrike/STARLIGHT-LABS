@@ -21,6 +21,38 @@ export default function CareersIndexPage() {
         internships, and campus programs. Every application is reviewed with confidentiality and compliance in mind.
       </p>
 
+      <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <section id="experienced-professionals" className="scroll-mt-28 rounded-lg border border-slate-200 bg-slate-50/80 p-5">
+          <h2 className="text-base font-semibold text-[#0a1628]">Experienced professionals</h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Staff, lead, and principal roles across engineering, delivery, and platform—client-facing ownership and clear
+            accountability.
+          </p>
+          <Link href="#open-roles" className="mt-3 inline-block text-sm font-medium text-[#0b5fff] hover:underline">
+            Browse roles below
+          </Link>
+        </section>
+        <section id="early-career-internships" className="scroll-mt-28 rounded-lg border border-slate-200 bg-slate-50/80 p-5">
+          <h2 className="text-base font-semibold text-[#0a1628]">Early career &amp; internships</h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Structured onboarding, mentorship, and paths from classroom or internship into billable work where programs
+            allow.
+          </p>
+          <Link href="#open-roles" className="mt-3 inline-block text-sm font-medium text-[#0b5fff] hover:underline">
+            See relevant openings
+          </Link>
+        </section>
+        <section id="campus-programs" className="scroll-mt-28 rounded-lg border border-slate-200 bg-slate-50/80 p-5">
+          <h2 className="text-base font-semibold text-[#0a1628]">Campus &amp; graduates</h2>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Career days, cohort pipelines, and graduate hiring—aligned to regional calendars and merit-based assessment.
+          </p>
+          <Link href="#open-roles" className="mt-3 inline-block text-sm font-medium text-[#0b5fff] hover:underline">
+            View programs &amp; roles
+          </Link>
+        </section>
+      </div>
+
       <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:items-center">
         <MarketingImage
           src={siteImages.graduationCelebration}
@@ -73,7 +105,9 @@ export default function CareersIndexPage() {
         <TalentCommunityForm />
       </div>
 
-      <h2 className="mt-20 text-2xl font-semibold text-[#0a1628]">Open roles</h2>
+      <h2 id="open-roles" className="scroll-mt-28 mt-20 text-2xl font-semibold text-[#0a1628]">
+        Open roles
+      </h2>
       <div className="mt-8 divide-y divide-slate-200 border-t border-slate-200">
         {JOB_POSTINGS.map((job) => (
           <Link
@@ -86,6 +120,7 @@ export default function CareersIndexPage() {
               <p className="text-sm text-slate-500">
                 {job.department} · {job.location} · {job.type}
               </p>
+              <p className="mt-1 text-sm font-medium text-slate-700">{job.compensationNgn}</p>
             </div>
             <span className="text-sm font-medium text-[#0b5fff]">View role →</span>
           </Link>

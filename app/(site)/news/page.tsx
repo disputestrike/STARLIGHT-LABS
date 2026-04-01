@@ -12,17 +12,32 @@ const items = [
   {
     date: "2026 Q2",
     title: "Platform release: clearer utilization dashboards",
-    excerpt: "Delivery and finance leaders get a unified view of bench, billing, and margin—rolling out to existing clients.",
+    excerpt:
+      "Delivery and finance leaders get a unified view of bench, billing, and margin—rolling out to existing client programs. Teams in Lagos and remote hubs now share the same weekly cadence for staffing decisions.",
   },
   {
     date: "2026 Q1",
     title: "Foundation expands school partnerships",
-    excerpt: "New STEM workshops launch in select regions; outcomes and schedules published per district agreements.",
+    excerpt:
+      "New STEM and computer-literacy workshops launch in partnership with schools and community centers in Nigeria; schedules and safeguarding practices are co-published with each institution.",
   },
   {
     date: "2025 Q4",
     title: "Starlight Labs strengthens cloud security posture",
-    excerpt: "Independent review completed; controls mapped to common enterprise frameworks.",
+    excerpt:
+      "Independent review completed; controls mapped to common enterprise frameworks used by our regulated clients. Incident response playbooks were exercised with follow-the-sun participants.",
+  },
+  {
+    date: "2025 Q3",
+    title: "Careers: Nigeria compensation transparency on open roles",
+    excerpt:
+      "Public job posts now include indicative annual ranges in Nigerian Naira (₦) alongside location and role type—so candidates can plan before they apply.",
+  },
+  {
+    date: "2025 Q2",
+    title: "Academy cohort: measurable quality gates into client squads",
+    excerpt:
+      "Graduates from the latest academy track entered production squads with defined code-review, testing, and observability expectations—mentored by senior engineers.",
   },
 ] as const;
 

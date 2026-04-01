@@ -15,7 +15,8 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "baseUrl": ".",
     "paths": {

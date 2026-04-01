@@ -2,17 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroRotator } from "@/components/marketing/HeroRotator";
 import { MarketingImage } from "@/components/marketing/MarketingImage";
+import { ValuePropositionBand } from "@/components/marketing/ValuePropositionBand";
 import { siteImages } from "@/lib/site-images";
+import { SITE_TAGLINE } from "@/lib/site-tagline";
 
 export const metadata: Metadata = {
   title: "Home",
-  description:
-    "Starlight Labs delivers global engineering talent and client outcomes—academy, HR, delivery, and finance on one platform.",
+  description: SITE_TAGLINE,
 };
 
 export default function HomePage() {
   return (
     <>
+      <ValuePropositionBand />
       <section className="border-b border-slate-100 bg-gradient-to-b from-slate-50 to-white">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-24">
           <div>
@@ -61,7 +63,11 @@ export default function HomePage() {
             ))}
           </div>
           <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-slate-500">
-            Representative industries—we publish named references and case studies as partnerships allow.
+            Representative industries—see{" "}
+            <Link href="/industries" className="font-medium text-[#0b5fff] hover:underline">
+              industries we serve
+            </Link>
+            . Named references and case studies are published as partnerships allow.
           </p>
         </div>
       </section>

@@ -15,8 +15,9 @@ export default function FoundationPage() {
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5fff]">Community</p>
       <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[#0a1628]">Starlight Foundation</h1>
       <p className="mt-4 max-w-2xl text-lg text-slate-600">
-        Technology only matters when it reaches people. We widen access through computer literacy, introductory STEM and
-        coding, and mentorship that connects practicing engineers with the next generation.
+        Technology only matters when it reaches people. From our base in Nigeria, we widen access through computer literacy,
+        introductory STEM and coding, and mentorship that connects practicing engineers with the next generation—prioritizing
+        inclusion, safety, and long-term partnerships with schools and nonprofits.
       </p>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:items-start">
@@ -29,13 +30,15 @@ export default function FoundationPage() {
         <div className="space-y-6 text-slate-600 leading-relaxed">
           <h2 className="text-xl font-semibold text-[#0a1628]">Programs</h2>
           <ul className="list-disc space-y-3 pl-5">
-            <li>Community labs and school partnerships for foundational digital skills</li>
-            <li>Coding workshops and project-based STEM for youth</li>
-            <li>Mentor hours with our delivery and academy staff</li>
+            <li>Community labs and school partnerships for foundational digital skills (keyboard, browsers, safe online habits)</li>
+            <li>Coding workshops and project-based STEM for youth—small groups with clear learning outcomes</li>
+            <li>Mentor hours with our delivery and academy staff; career conversations without unrealistic promises</li>
+            <li>Equipment and connectivity guidance where institutions need practical help to get started</li>
           </ul>
           <p>
             Initiatives are co-designed with educators and local leaders—prioritizing safety, inclusion, and sustainable
-            impact over one-off events.
+            impact over one-off photo ops. Where we can, we align foundation activity with hiring pipelines so merit and
+            assessment stay the gate, not connections alone.
           </p>
         </div>
       </div>

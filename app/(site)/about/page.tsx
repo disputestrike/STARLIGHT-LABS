@@ -15,19 +15,20 @@ export default function AboutPage() {
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0b5fff]">About us</p>
       <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-[#0a1628]">Who we are</h1>
       <p className="mt-4 max-w-2xl text-lg text-slate-600">
-        Starlight Labs is a global engineering delivery and talent company. We combine academy-style training, rigorous
-        onboarding and HR, and disciplined client delivery—supported by one internal platform for talent, projects, CRM,
-        and finance.
+        Starlight Labs is a Nigerian technology company with an African delivery footprint—founded in 2020. We combine
+        academy-style training, rigorous onboarding and HR, and disciplined client work for partners worldwide—supported by
+        one internal platform for talent, projects, CRM, and finance.
       </p>
 
       <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:items-start">
         <div className="space-y-6 text-slate-600 leading-relaxed">
           <h2 className="text-xl font-semibold text-[#0a1628]">History & vision</h2>
           <p>
-            We were founded to close the gap between ambitious roadmaps and teams that can ship: too many organizations
-            struggle with opaque outsourcing, weak talent pipelines, and tools that do not connect people to profit. Our
-            vision is a single, trustworthy operating layer for global engineering—where talent, delivery, and commercial
-            reality stay aligned.
+            Founded in <strong className="text-slate-800">2020</strong> in Nigeria, we set out to close the gap between
+            ambitious roadmaps and teams that can ship: too many organizations struggle with opaque outsourcing, weak talent
+            pipelines, and tools that do not connect people to profit. Our vision is a trustworthy operating layer for
+            engineering delivery—where talent, commercial reality, and client outcomes stay aligned from Lagos to global
+            programs.
           </p>
           <h2 className="pt-6 text-xl font-semibold text-[#0a1628]">Mission & values</h2>
           <ul className="list-disc space-y-2 pl-5">

@@ -1,8 +1,9 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import { SessionProvider } from "@/components/providers/SessionProvider";
+import { SITE_TAGLINE } from "@/lib/site-tagline";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,8 +16,7 @@ export const metadata: Metadata = {
     default: "Starlight Labs",
     template: "%s · Starlight Labs",
   },
-  description:
-    "Global engineering delivery and talent—training, HR, and client outcomes on one operating platform.",
+  description: SITE_TAGLINE,
 };
 
 export default function RootLayout({
