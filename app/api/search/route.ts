@@ -2,7 +2,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { authenticateRequest } from "@/lib/auth";
+import {
+  DealStage,
+  InvoiceStatus,
+  ProjectStatus,
+  TaskStatus,
+} from "@prisma/client";
 import { z } from "zod";
+
+function asEnumMember<T extends string>(
+  allowed: readonly T[],
+  value: string | undefined
+): T | undefined {
+  if (!value) return undefined;
+  return allowed.includes(value as T) ? (value as T) : undefined;
+}
 
 const searchSchema = z.object({
   q: z.string().min(1),
@@ -73,13 +87,17 @@ async function performSearch(query: SearchQuery) {
   try {
     // Search projects
     if (query.type === "all" || query.type === "projects") {
+      const projectStatus = asEnumMember(
+        Object.values(ProjectStatus),
+        query.filters?.status
+      );
       const projects = await prisma.project.findMany({
         where: {
           OR: [
             { name: { contains: searchTerm, mode: "insensitive" } },
             { description: { contains: searchTerm, mode: "insensitive" } },
           ],
-          ...(query.filters?.status && { status: query.filters.status }),
+          ...(projectStatus && { status: projectStatus }),
         },
         include: { client: true },
         take: limit,
@@ -99,13 +117,17 @@ async function performSearch(query: SearchQuery) {
 
     // Search deals
     if (query.type === "all" || query.type === "deals") {
+      const dealStage = asEnumMember(
+        Object.values(DealStage),
+        query.filters?.status
+      );
       const deals = await prisma.deal.findMany({
         where: {
           OR: [
             { title: { contains: searchTerm, mode: "insensitive" } },
             { description: { contains: searchTerm, mode: "insensitive" } },
           ],
-          ...(query.filters?.status && { stage: query.filters.status }),
+          ...(dealStage && { stage: dealStage }),
         },
         include: { client: true },
         take: limit,
@@ -150,13 +172,17 @@ async function performSearch(query: SearchQuery) {
 
     // Search tasks
     if (query.type === "all" || query.type === "tasks") {
+      const taskStatus = asEnumMember(
+        Object.values(TaskStatus),
+        query.filters?.status
+      );
       const tasks = await prisma.task.findMany({
         where: {
           OR: [
             { title: { contains: searchTerm, mode: "insensitive" } },
             { description: { contains: searchTerm, mode: "insensitive" } },
           ],
-          ...(query.filters?.status && { status: query.filters.status }),
+          ...(taskStatus && { status: taskStatus }),
         },
         include: { project: true },
         take: limit,
@@ -176,13 +202,17 @@ async function performSearch(query: SearchQuery) {
 
     // Search invoices
     if (query.type === "all" || query.type === "invoices") {
+      const invoiceStatus = asEnumMember(
+        Object.values(InvoiceStatus),
+        query.filters?.status
+      );
       const invoices = await prisma.invoice.findMany({
         where: {
           OR: [
             { invoiceNumber: { contains: searchTerm, mode: "insensitive" } },
             { description: { contains: searchTerm, mode: "insensitive" } },
           ],
-          ...(query.filters?.status && { status: query.filters.status }),
+          ...(invoiceStatus && { status: invoiceStatus }),
         },
         include: { client: true },
         take: limit,

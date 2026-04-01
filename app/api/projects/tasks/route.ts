@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { authenticateRequest } from "@/lib/auth";
+import { Priority, TaskStatus, TaskType } from "@prisma/client";
 import { z } from "zod";
 
 const taskSchema = z.object({
@@ -9,10 +10,10 @@ const taskSchema = z.object({
   sprintId: z.string().optional(),
   title: z.string().min(1),
   description: z.string().optional(),
-  type: z.string().default("FEATURE"),
-  priority: z.string().default("MEDIUM"),
-  storyPoints: z.number().nonnegative().optional(),
-  estimatedHours: z.number().nonnegative().optional(),
+  type: z.nativeEnum(TaskType).default(TaskType.FEATURE),
+  priority: z.nativeEnum(Priority).default(Priority.MEDIUM),
+  storyPoints: z.number().int().nonnegative().optional(),
+  estimatedHours: z.number().int().nonnegative().optional(),
   dueDate: z.string().datetime().optional(),
 });
 
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
         description,
         type,
         priority,
-        status: "TODO",
+        status: TaskStatus.TODO,
         storyPoints,
         estimatedHours,
         dueDate: dueDate ? new Date(dueDate) : null,
@@ -76,11 +77,16 @@ export async function GET(req: NextRequest) {
     const sprintId = searchParams.get("sprintId");
     const status = searchParams.get("status");
 
+    const statusFilter =
+      status && Object.values(TaskStatus).includes(status as TaskStatus)
+        ? (status as TaskStatus)
+        : undefined;
+
     const tasks = await prisma.task.findMany({
       where: {
         ...(projectId && { projectId }),
         ...(sprintId && { sprintId }),
-        ...(status && { status }),
+        ...(statusFilter && { status: statusFilter }),
       },
       include: {
         comments: { orderBy: { createdAt: "desc" } },

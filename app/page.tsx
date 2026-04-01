@@ -1,53 +1,80 @@
 // app/page.tsx
 import Link from "next/link";
+import { HeroVisual } from "@/components/marketing/HeroVisual";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+      <div
+        className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-blue-600/25 blur-3xl"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-32 top-1/3 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute bottom-0 left-1/2 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-indigo-600/15 blur-3xl"
+        aria-hidden
+      />
+
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-slate-900/80 backdrop-blur-sm border-b border-slate-700 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-sm">
-                S
-              </div>
-              <span className="font-bold text-lg">Starlight Labs</span>
+      <nav className="fixed top-0 z-50 w-full border-b border-slate-700/80 bg-slate-950/75 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold shadow-lg shadow-blue-500/25">
+              S
             </div>
-            <div className="flex items-center gap-4">
-              <Link href="/auth/login" className="px-4 py-2 text-slate-300 hover:text-white transition">
-                Login
-              </Link>
-              <Link href="/auth/register" className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition">
-                Get Started
-              </Link>
-            </div>
+            <span className="text-lg font-bold tracking-tight">Starlight Labs</span>
+          </Link>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/auth/login"
+              className="rounded-lg px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+            >
+              Login
+            </Link>
+            <Link
+              href="/auth/register"
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold shadow-md shadow-blue-600/30 transition hover:bg-blue-500"
+            >
+              Get started
+            </Link>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Your AI. Working While You Sleep.
-          </h1>
-          <p className="text-xl sm:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto">
-            Negotiates bills, books appointments, finds deals. On every channel. Automatically.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/dashboard"
-              className="px-8 py-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition font-semibold text-lg"
-            >
-              Claim my free Loop →
-            </Link>
-            <Link
-              href="#features"
-              className="px-8 py-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition font-semibold text-lg"
-            >
-              Learn More
-            </Link>
+      <section className="px-4 pb-20 pt-28 sm:px-6 sm:pt-32 lg:px-8">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-8">
+          <div className="text-center lg:text-left">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-blue-400">
+              Global engineering operations
+            </p>
+            <h1 className="mb-6 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
+              AI-native talent &amp; delivery, end to end.
+            </h1>
+            <p className="mb-8 max-w-xl text-lg text-slate-300 sm:text-xl lg:mx-0 mx-auto">
+              Run bootcamps, staff projects, manage CRM and finance—one platform for global
+              engineering operations.
+            </p>
+            <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-start">
+              <Link
+                href="/auth/register"
+                className="rounded-xl bg-blue-600 px-8 py-4 text-center text-lg font-semibold shadow-lg shadow-blue-600/25 transition hover:bg-blue-500"
+              >
+                Create account
+              </Link>
+              <Link
+                href="#features"
+                className="rounded-xl border border-slate-600 bg-slate-800/50 px-8 py-4 text-center text-lg font-semibold backdrop-blur transition hover:border-slate-500 hover:bg-slate-800"
+              >
+                Explore capabilities
+              </Link>
+            </div>
+          </div>
+          <div className="flex justify-center lg:justify-end">
+            <HeroVisual />
           </div>
         </div>
       </section>
@@ -59,32 +86,44 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
+                icon: "🌍",
                 title: "Global Talent Pipeline",
                 description: "Access elite engineers from Nigeria and across Africa, trained on modern stacks.",
               },
               {
+                icon: "🚀",
                 title: "Project Delivery Excellence",
                 description: "Agile-native delivery with real-time sprint management and quality assurance.",
               },
               {
+                icon: "⚡",
                 title: "AI-Powered Operations",
                 description: "Crucible AI platform multiplies productivity through automation and integration.",
               },
               {
+                icon: "📊",
                 title: "CRM & Sales Ops",
                 description: "Manage deals, track pipeline, and close contracts with built-in sales tools.",
               },
               {
+                icon: "💹",
                 title: "Financial Intelligence",
                 description: "Track margins, invoicing, and team utilization with real-time dashboards.",
               },
               {
+                icon: "🎓",
                 title: "Bootcamp Academy",
                 description: "Continuous talent pipeline with structured training and placement.",
               },
             ].map((feature, i) => (
-              <div key={i} className="bg-slate-700/50 p-6 rounded-lg border border-slate-600">
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+              <div
+                key={i}
+                className="rounded-xl border border-slate-600/80 bg-slate-800/40 p-6 backdrop-blur transition hover:border-blue-500/40 hover:bg-slate-800/60"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-700/80 text-2xl">
+                  {feature.icon}
+                </div>
+                <h3 className="mb-2 text-lg font-semibold">{feature.title}</h3>
                 <p className="text-slate-300">{feature.description}</p>
               </div>
             ))}
@@ -136,15 +175,16 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  className={`w-full py-3 rounded-lg font-semibold transition ${
+                <Link
+                  href="/auth/register"
+                  className={`block w-full rounded-lg py-3 text-center font-semibold transition ${
                     plan.highlighted
                       ? "bg-white text-blue-600 hover:bg-slate-100"
                       : "bg-slate-600 hover:bg-slate-500"
                   }`}
                 >
-                  Get Started
-                </button>
+                  Get started
+                </Link>
               </div>
             ))}
           </div>
@@ -172,7 +212,7 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-slate-400">
-                <li><Link href="#" className="hover:text-white transition">Features</Link></li>
+                <li><Link href="/#features" className="hover:text-white transition">Features</Link></li>
                 <li><Link href="#" className="hover:text-white transition">Pricing</Link></li>
                 <li><Link href="#" className="hover:text-white transition">API</Link></li>
               </ul>

@@ -108,12 +108,12 @@ export default function LoginPage() {
           <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-sm font-semibold text-blue-900 mb-2">Demo Credentials:</p>
             <p className="text-sm text-blue-800">Email: admin@starlabs.dev</p>
-            <p className="text-sm text-blue-800">Password: (set your own)</p>
+            <p className="text-sm text-blue-800">Password: Admin123!</p>
           </div>
 
           {/* Register Link */}
           <p className="text-center text-gray-600 mt-6">
-            Don't have an account?{" "}
+            {"Don't have an account? "}
             <Link href="/auth/register" className="text-blue-600 hover:underline font-semibold">
               Register here
             </Link>

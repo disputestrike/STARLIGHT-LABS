@@ -2,13 +2,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { authenticateRequest } from "@/lib/auth";
+import { ProjectStatus } from "@prisma/client";
 import { z } from "zod";
 
 const updateProjectSchema = z.object({
   name: z.string().min(1).optional(),
   description: z.string().optional(),
-  status: z.string().optional(),
-  budget: z.number().positive().optional(),
+  status: z.nativeEnum(ProjectStatus).optional(),
+  budget: z.number().int().positive().optional(),
 });
 
 export async function GET(

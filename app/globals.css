@@ -1,7 +1,8 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* App-specific styles (after Tailwind layers) */
 
 * {
   margin: 0;
@@ -14,9 +15,6 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,7 +38,6 @@ body {
   background: #94a3b8;
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -69,7 +66,6 @@ body {
   animation: slideInUp 0.3s ease-out;
 }
 
-/* Utility classes */
 .glass {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);

@@ -2,13 +2,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { authenticateRequest } from "@/lib/auth";
+import { ExpenseCategory, ExpenseStatus } from "@prisma/client";
 import { z } from "zod";
 
 const expenseSchema = z.object({
   projectId: z.string().optional(),
-  category: z.string(),
+  category: z.nativeEnum(ExpenseCategory),
   description: z.string().min(1),
-  amount: z.number().positive(),
+  amount: z.number().int().positive(),
   date: z.string().datetime(),
 });
 
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
         description,
         amount,
         date: new Date(date),
-        status: "PENDING",
+        status: ExpenseStatus.PENDING,
       },
     });
 
@@ -58,10 +59,15 @@ export async function GET(req: NextRequest) {
     const projectId = searchParams.get("projectId");
     const status = searchParams.get("status");
 
+    const statusFilter =
+      status && Object.values(ExpenseStatus).includes(status as ExpenseStatus)
+        ? (status as ExpenseStatus)
+        : undefined;
+
     const expenses = await prisma.expense.findMany({
       where: {
         ...(projectId && { projectId }),
-        ...(status && { status }),
+        ...(statusFilter && { status: statusFilter }),
       },
       orderBy: { date: "desc" },
       take: 100,

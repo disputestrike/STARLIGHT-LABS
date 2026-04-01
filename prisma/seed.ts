@@ -1,14 +1,28 @@
 // prisma/seed.ts
 // Initial seed data for development
 
-import { PrismaClient, UserRole, ProjectStatus, CohortStatus } from "@prisma/client";
+import {
+  PrismaClient,
+  UserRole,
+  ProjectStatus,
+  CohortStatus,
+  ClientStatus,
+  SeniorityLevel,
+  ProjectRole,
+} from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
+
+/** Dev password for all seeded accounts (see README). */
+const DEV_PASSWORD = "Admin123!";
 
 async function main() {
   console.log("Seeding database...");
 
-  // Clear existing data
+  const passwordHash = await bcrypt.hash(DEV_PASSWORD, 10);
+
+  // Clear existing data (order respects FKs: children cascade or clear with users first)
   await prisma.user.deleteMany();
   await prisma.bootcampProgram.deleteMany();
   await prisma.client.deleteMany();
@@ -18,7 +32,7 @@ async function main() {
   const admin = await prisma.user.create({
     data: {
       email: "admin@starlabs.dev",
-      password: "$2b$10$dummy", // Replace with actual bcrypt hash
+      password: passwordHash,
       firstName: "Admin",
       lastName: "User",
       role: UserRole.ADMIN,
@@ -36,7 +50,7 @@ async function main() {
   const founder = await prisma.user.create({
     data: {
       email: "founder@starlabs.dev",
-      password: "$2b$10$dummy",
+      password: passwordHash,
       firstName: "Ben",
       lastName: "Adayehi",
       role: UserRole.FOUNDER,
@@ -78,7 +92,7 @@ async function main() {
     const engineer = await prisma.user.create({
       data: {
         email: `engineer${i}@starlabs.dev`,
-        password: "$2b$10$dummy",
+        password: passwordHash,
         firstName: `Engineer`,
         lastName: `${i}`,
         role: UserRole.ENGINEER,
@@ -92,7 +106,11 @@ async function main() {
         engineerProfile: {
           create: {
             seniority:
-              i === 1 || i === 2 ? "JUNIOR" : i === 3 ? "MID" : "SENIOR",
+              i === 1 || i === 2
+                ? SeniorityLevel.JUNIOR
+                : i === 3
+                  ? SeniorityLevel.MID
+                  : SeniorityLevel.SENIOR,
             yearsOfExperience: i * 2,
             specializations: [
               "React",
@@ -174,19 +192,19 @@ async function main() {
         create: [
           {
             userId: engineers[0].id,
-            role: "DEVELOPER",
+            role: ProjectRole.DEVELOPER,
             allocatedHours: 40,
             allocatedPercentage: 100,
           },
           {
             userId: engineers[1].id,
-            role: "DEVELOPER",
+            role: ProjectRole.DEVELOPER,
             allocatedHours: 40,
             allocatedPercentage: 100,
           },
           {
             userId: engineers[2].id,
-            role: "QA",
+            role: ProjectRole.QA,
             allocatedHours: 20,
             allocatedPercentage: 50,
           },

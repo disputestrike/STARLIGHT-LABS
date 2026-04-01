@@ -1,7 +1,13 @@
-// hooks/useAuth.ts
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  FormEvent,
+  FocusEvent,
+} from "react";
 import { useRouter } from "next/navigation";
 
 interface User {
@@ -31,7 +37,6 @@ export function useAuth(): AuthContextType {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if user is already authenticated
   useEffect(() => {
     const checkAuth = () => {
       try {
@@ -133,24 +138,18 @@ export function useAuth(): AuthContextType {
   };
 }
 
-// hooks/useApi.ts
-import { useState, useCallback } from "react";
-
 interface UseApiOptions {
   onSuccess?: (data: unknown) => void;
   onError?: (error: Error) => void;
   autoFetch?: boolean;
 }
 
-export function useApi<T>(
-  endpoint: string,
-  options: UseApiOptions = {}
-) {
+export function useApi<T>(endpoint: string, options: UseApiOptions = {}) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetch = useCallback(async () => {
+  const doFetch = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
@@ -173,39 +172,37 @@ export function useApi<T>(
 
       return result;
     } catch (err) {
-      const error = err instanceof Error ? err : new Error("Unknown error");
-      setError(error);
-      options.onError?.(error);
-      throw error;
+      const e = err instanceof Error ? err : new Error("Unknown error");
+      setError(e);
+      options.onError?.(e);
+      throw e;
     } finally {
       setIsLoading(false);
     }
   }, [endpoint, options]);
 
-  // Auto-fetch on mount if enabled
-  React.useEffect(() => {
+  useEffect(() => {
     if (options.autoFetch !== false) {
-      fetch();
+      void doFetch();
     }
-  }, []);
+  }, [doFetch, options.autoFetch]);
 
   return {
     data,
     error,
     isLoading,
-    refetch: fetch,
+    refetch: doFetch,
   };
 }
-
-// hooks/useForm.ts
-import { ChangeEvent, FormEvent, useState } from "react";
 
 export function useForm<T extends Record<string, unknown>>(
   initialValues: T,
   onSubmit: (values: T) => Promise<void> | void
 ) {
   const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState<Record<keyof T, string>>({} as Record<keyof T, string>);
+  const [errors, setErrors] = useState<Record<keyof T, string>>(
+    {} as Record<keyof T, string>
+  );
   const [touched, setTouched] = useState<Set<keyof T>>(new Set());
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -223,9 +220,7 @@ export function useForm<T extends Record<string, unknown>>(
   };
 
   const handleBlur = (
-    e: React.FocusEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setTouched((prev) => new Set([...prev, e.target.name as keyof T]));
   };
@@ -271,7 +266,6 @@ export function useForm<T extends Record<string, unknown>>(
   };
 }
 
-// hooks/useLocalStorage.ts
 export function useLocalStorage<T>(key: string, initialValue: T) {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {

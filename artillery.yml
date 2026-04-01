@@ -1,5 +1,4 @@
-// artillery.yml
-# Artillery Load Testing Configuration
+# Artillery load testing — run: npx artillery run artillery.yml
 # Run: npx artillery run artillery.yml
 
 config:

@@ -23,18 +23,8 @@ export async function GET(req: NextRequest) {
 
     const logs = await prisma.auditLog.findMany({
       where: {
-        ...(resource && { resource }),
+        ...(resource && { entityType: resource }),
         ...(action && { action }),
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-          },
-        },
       },
       orderBy: { createdAt: "desc" },
       skip: offset,
@@ -59,16 +49,29 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { action, resource, resourceId, changes } = body;
+    const {
+      action,
+      entityType,
+      entityId,
+      resource,
+      resourceId,
+      oldValues,
+      newValues,
+      changes,
+    } = body;
 
     const log = await prisma.auditLog.create({
       data: {
         userId: user.id,
-        action,
-        resource,
-        resourceId,
-        changes: changes || {},
-        ip: req.headers.get("x-forwarded-for") || "unknown",
+        action: action || "NOTE",
+        entityType: entityType || resource || "UNKNOWN",
+        entityId: entityId || resourceId || "",
+        oldValues: oldValues ?? undefined,
+        newValues: newValues ?? changes ?? undefined,
+        ipAddress:
+          req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+          undefined,
+        userAgent: req.headers.get("user-agent") || undefined,
       },
     });
 

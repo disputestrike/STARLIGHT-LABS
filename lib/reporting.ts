@@ -103,6 +103,17 @@ export async function generateRevenueReport(config: ReportConfig): Promise<Repor
   const totalRevenue = invoices.reduce((sum, inv) => sum + inv.totalAmount, 0);
   const avgInvoiceValue = invoices.length > 0 ? totalRevenue / invoices.length : 0;
 
+  const clientTotals: Record<string, number> = {};
+  invoices.forEach((inv) => {
+    const n = inv.client.name;
+    clientTotals[n] = (clientTotals[n] || 0) + inv.totalAmount;
+  });
+  const topClientRevenue = Math.max(0, ...Object.values(clientTotals));
+  const topClientPct =
+    totalRevenue > 0
+      ? ((topClientRevenue / totalRevenue) * 100).toFixed(1)
+      : "0.0";
+
   const summary: ReportSummary = {
     title: "Revenue Report",
     description: `Revenue analysis for ${from.toLocaleDateString()} - ${to.toLocaleDateString()}`,
@@ -119,7 +130,7 @@ export async function generateRevenueReport(config: ReportConfig): Promise<Repor
       title: "Top Clients",
       data: getTopClients(invoices, 5),
       insights: [
-        `Top client represents ${((getTopClients(invoices, 1)[0]?.revenue / totalRevenue) * 100).toFixed(1)}% of revenue`,
+        `Top client represents ${topClientPct}% of revenue`,
       ],
     },
     {

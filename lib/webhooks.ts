@@ -92,7 +92,7 @@ export async function dispatchWebhook(
           'X-Webhook-Event': event,
         },
         body: JSON.stringify(payload),
-        timeout: 10000, // 10 second timeout
+        signal: AbortSignal.timeout(10_000),
       });
 
       if (response.ok) {

@@ -1,6 +1,13 @@
 // app/layout.tsx
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Starlight Labs - AI-Native Talent & Delivery Platform",
@@ -14,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-50 text-gray-900">
+    <html lang="en" className={inter.variable}>
+      <body className={`${inter.className} bg-slate-50 text-gray-900 antialiased`}>
         {children}
       </body>
     </html>
