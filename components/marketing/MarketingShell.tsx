@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLayoutEffect, useRef } from "react";
 import { FooterAccountLinks } from "@/components/marketing/FooterAccountLinks";
 import { NavDropdown, type NavDropdownItem } from "@/components/marketing/NavDropdown";
 import { SITE_TAGLINE } from "@/lib/site-tagline";
@@ -30,6 +32,20 @@ const careersItems: NavDropdownItem[] = [
 ];
 
 export function MarketingShell({ children }: { children: React.ReactNode }) {
+  const mobileMenuRef = useRef<HTMLDetailsElement>(null);
+  const pathname = usePathname();
+
+  function closeMobileMenu() {
+    const el = mobileMenuRef.current;
+    if (el) el.open = false;
+  }
+
+  /* Close the mobile <details> panel as soon as the route changes (before paint). */
+  useLayoutEffect(() => {
+    const el = mobileMenuRef.current;
+    if (el) el.open = false;
+  }, [pathname]);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-slate-900 supports-[padding:max(0px)]:pb-[env(safe-area-inset-bottom)]">
       <header className="sticky top-0 z-50 overflow-visible border-b border-slate-200/90 bg-white/95 backdrop-blur supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
@@ -40,12 +56,16 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
           >
             Starlight Labs
           </Link>
-          <details className="relative md:hidden">
+          <details ref={mobileMenuRef} className="relative md:hidden">
             <summary className="flex min-h-[44px] min-w-[44px] cursor-pointer list-none items-center justify-center rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 [&::-webkit-details-marker]:hidden">
               Menu
             </summary>
             <div className="absolute right-0 z-50 mt-1 max-h-[min(80vh,520px)] w-[min(100vw-2rem,20rem)] overflow-y-auto rounded-md border border-slate-200 bg-white py-2 shadow-lg">
-              <Link href="/about" className="block min-h-[44px] px-4 py-3 text-sm text-slate-800 hover:bg-slate-50">
+              <Link
+                href="/about"
+                onClick={closeMobileMenu}
+                className="block min-h-[44px] px-4 py-3 text-sm text-slate-800 hover:bg-slate-50"
+              >
                 About us
               </Link>
               <p className="px-4 pt-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Services</p>
@@ -53,6 +73,7 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeMobileMenu}
                   className="block min-h-[44px] px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
                 >
                   {item.label}
@@ -63,6 +84,7 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeMobileMenu}
                   className="block min-h-[44px] px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
                 >
                   {item.label}
@@ -73,12 +95,17 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeMobileMenu}
                   className="block min-h-[44px] px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
                 >
                   {item.label}
                 </Link>
               ))}
-              <Link href="/news" className="mt-1 block min-h-[44px] px-4 py-3 text-sm text-slate-800 hover:bg-slate-50">
+              <Link
+                href="/news"
+                onClick={closeMobileMenu}
+                className="mt-1 block min-h-[44px] px-4 py-3 text-sm text-slate-800 hover:bg-slate-50"
+              >
                 News
               </Link>
             </div>
