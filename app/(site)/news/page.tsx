@@ -29,9 +29,9 @@ const items = [
   },
   {
     date: "2025 Q3",
-    title: "Careers: Nigeria compensation transparency on open roles",
+    title: "Careers: clearer experience bars and role depth on postings",
     excerpt:
-      "Open roles now show indicative gross ranges in Nigerian naira (₦) benchmarked to local IT services and product employers—not foreign pay scales converted to ₦—alongside location and seniority context.",
+      "Job descriptions now spell out required versus preferred qualifications in more detail, with a consistent minimum experience expectation for professional hires; package discussions move to recruiting conversations.",
   },
   {
     date: "2025 Q2",

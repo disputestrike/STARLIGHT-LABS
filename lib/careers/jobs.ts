@@ -1,32 +1,56 @@
-/**
- * Compensation bands reflect typical gross annual pay for experienced hires in the Nigerian
- * technology and IT services market (Lagos / major hubs, 2025–2026), not US/EU salaries converted to ₦.
- */
 export type JobPosting = {
   slug: string;
   title: string;
   department: string;
   location: string;
   type: "Full-time" | "Contract" | "Internship" | "Program";
-  /** Indicative local range in Naira — not an offer; depends on level, interview, and budget. */
-  compensationNgn: string;
   summary: string;
   responsibilities: string[];
-  /** Required / minimum bar */
   qualifications: string[];
-  /** Nice-to-have — used for shortlisting */
   preferredQualifications?: string[];
 };
 
 export const JOB_POSTINGS: JobPosting[] = [
+  {
+    slug: "social-media-manager",
+    title: "Social Media Manager",
+    department: "Marketing & communications",
+    location: "Lagos · Nigeria · Hybrid / remote",
+    type: "Full-time",
+    summary:
+      "Own Starlight Labs’ social presence across major platforms: strategy, content calendar, creative briefs, community engagement, and reporting—aligned with brand voice, compliance, and growth goals for a B2B technology and services company.",
+    responsibilities: [
+      "Develop and run a cross-platform content strategy (e.g. LinkedIn, Instagram, TikTok, X, YouTube Shorts, Facebook) tailored to each channel’s format and audience",
+      "Maintain an editorial calendar; coordinate with internal SMEs, design, and leadership for launches, events, and employer-brand moments",
+      "Produce or brief short-form video, carousels, copy, and hooks; ensure accessibility basics (captions, alt text where applicable)",
+      "Monitor comments, DMs, and mentions; escalate issues; uphold professional tone and crisis-communication playbooks",
+      "Track performance (reach, engagement, saves, clicks, follower quality); report weekly/monthly with actionable insights",
+      "Stay current on algorithm and format changes; test hooks, posting times, and creative variants within brand guidelines",
+      "Coordinate paid social campaigns with stakeholders when applicable (briefs, targeting notes, handoff to agencies or internal buyers)",
+      "Ensure rights, disclosures, and client confidentiality in all public posts; maintain a simple approval log for regulated or sensitive topics",
+    ],
+    qualifications: [
+      "Minimum 3 years of professional experience in social media management, digital marketing, or communications for brands or agencies",
+      "Demonstrable portfolio or case summaries showing growth and engagement on at least two of: Instagram, TikTok, LinkedIn, Facebook/Meta, X",
+      "Hands-on experience with native platform tools and at least one scheduling/analytics suite (e.g. Meta Business Suite, Later, Hootsuite, Sprout, or equivalent)",
+      "Strong copywriting and storytelling in English; comfortable editing video scripts and on-screen captions for short-form",
+      "Working knowledge of creative tools (e.g. Canva, CapCut, or collaboration with designers in Figma)",
+      "Understanding of analytics: impressions, engagement rate, CTR, and how they map to pipeline and brand objectives",
+      "Organized, detail-oriented, and able to manage multiple campaigns and stakeholders without dropping deadlines",
+    ],
+    preferredQualifications: [
+      "Experience with B2B, technology, consulting, or professional services brands",
+      "Basic familiarity with employer branding and recruiting-focused content",
+      "Experience with influencer or creator coordination and UGC guidelines",
+      "Certifications or coursework in digital marketing, Meta Blueprint, or Google Analytics",
+    ],
+  },
   {
     slug: "ai-ml-engineer",
     title: "AI / ML Engineer",
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote (global clients)",
     type: "Full-time",
-    compensationNgn:
-      "₦5,500,000 – ₦9,500,000 / year gross (typical senior IC band, Lagos IT services market)",
     summary:
       "Own model development and production integration for client programs: from problem framing and datasets to evaluation, deployment, and monitoring—with clear documentation for regulated environments.",
     responsibilities: [
@@ -39,8 +63,8 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Contribute to code review, shared libraries, and internal playbooks for responsible AI delivery",
     ],
     qualifications: [
+      "Minimum 3 years of professional software engineering experience, including substantial hands-on ML or applied AI delivery",
       "Bachelor’s degree in Computer Science, Engineering, Mathematics, Statistics, or equivalent practical experience",
-      "4+ years of professional software engineering experience, including 2+ years hands-on ML or applied AI",
       "Strong Python; proficiency with at least one major ML framework (e.g. PyTorch, TensorFlow, scikit-learn stack)",
       "Experience with data preparation, feature engineering, and offline/online evaluation—not only notebook prototypes",
       "Familiarity with cloud ML workflows (training jobs, object storage, secrets) on at least one major provider",
@@ -60,7 +84,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦5,000,000 – ₦8,500,000 / year gross (Lagos benchmark)",
     summary:
       "Bridge data science and platform engineering: ship reliable inference, batch pipelines, observability, and release discipline so models stay healthy after launch day.",
     responsibilities: [
@@ -73,7 +96,8 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Document runbooks, on-call expectations, and handover for client or internal operations teams",
     ],
     qualifications: [
-      "Bachelor’s degree in CS, Engineering, or equivalent; 3+ years in software engineering with 1+ year serving ML in production",
+      "Minimum 3 years of professional software engineering experience, including serving ML or high-scale data systems in production",
+      "Bachelor’s degree in CS, Engineering, or equivalent",
       "Strong Python; experience with containers (Docker) and orchestration (Kubernetes or managed equivalents)",
       "Understanding of REST/gRPC APIs, message queues, and at least one major cloud provider’s ML/serving stack",
       "Hands-on debugging of production issues (latency spikes, memory, dependency failures)",
@@ -92,7 +116,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦3,600,000 – ₦6,500,000 / year gross (mid-level band; senior hires discussed separately)",
     summary:
       "Deliver end-to-end features across modern web frontends, APIs, and persistence layers for client products— with tests, observability, and clear ownership in agile squads.",
     responsibilities: [
@@ -105,8 +128,8 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Document APIs, environment setup, and deployment steps for handover and audits",
     ],
     qualifications: [
+      "Minimum 3 years of professional full-stack or strong frontend+backend combined experience",
       "Bachelor’s degree in CS, Software Engineering, or related field, or demonstrable equivalent experience",
-      "3+ years of professional full-stack or strong frontend+backend combined experience",
       "Proficiency in TypeScript/JavaScript and at least one modern frontend framework (React/Next.js strongly preferred)",
       "Solid experience building REST (or GraphQL) APIs and working with relational databases (PostgreSQL or similar)",
       "Understanding of authentication, authorization, and secure handling of sessions/tokens",
@@ -126,7 +149,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦3,800,000 – ₦6,800,000 / year gross",
     summary:
       "Design and build resilient services, data access layers, and integrations for enterprise workloads—with emphasis on correctness, performance, and operability.",
     responsibilities: [
@@ -139,7 +161,8 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Coordinate with frontend, mobile, and partner teams on versioning and compatibility",
     ],
     qualifications: [
-      "Bachelor’s degree in CS or equivalent; 3+ years backend-focused development",
+      "Minimum 3 years of professional backend-focused development",
+      "Bachelor’s degree in CS or equivalent",
       "Strong proficiency in at least one backend stack (Node.js/TypeScript, Java, Go, .NET, or similar)",
       "Deep SQL skills and experience with PostgreSQL or equivalent relational databases",
       "Understanding of distributed systems basics: idempotency, retries, eventual consistency, messaging",
@@ -158,7 +181,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦3,400,000 – ₦6,000,000 / year gross",
     summary:
       "Build accessible, performant user interfaces and shared component libraries—aligned with design systems and quality bars expected by enterprise clients.",
     responsibilities: [
@@ -171,7 +193,8 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Document component APIs and usage for other engineers",
     ],
     qualifications: [
-      "Bachelor’s degree or equivalent; 2+ years professional frontend development",
+      "Minimum 3 years of professional frontend development",
+      "Bachelor’s degree or equivalent",
       "Strong React (or equivalent) with TypeScript in production codebases",
       "Solid HTML/CSS skills including layout (Flex/Grid), responsive design, and semantic markup",
       "Understanding of WCAG-oriented practices and keyboard/screen-reader basics",
@@ -190,7 +213,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Platform",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦4,500,000 – ₦7,800,000 / year gross",
     summary:
       "Automate infrastructure, CI/CD, and release pipelines so squads ship safely— with guardrails, observability, and cost-aware cloud operations.",
     responsibilities: [
@@ -203,7 +225,7 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Document platform standards and train squads on self-service patterns",
     ],
     qualifications: [
-      "3+ years in DevOps, SRE, or platform engineering roles",
+      "Minimum 3 years of professional experience in DevOps, SRE, or platform engineering roles",
       "Hands-on experience with at least one major cloud (AWS, Azure, or GCP)",
       "Strong scripting (Bash, Python, or similar) and Git-based workflows",
       "Experience with containerization and Kubernetes or managed container services",
@@ -222,7 +244,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Platform",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦5,000,000 – ₦8,500,000 / year gross",
     summary:
       "Own reliability targets, error budgets, and incident lifecycle for critical services—balancing velocity with sustainable operations.",
     responsibilities: [
@@ -235,7 +256,7 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Mentor developers on production readiness checklists and operational excellence",
     ],
     qualifications: [
-      "4+ years in production engineering, SRE, or equivalent operations-heavy software role",
+      "Minimum 3 years of professional experience in production engineering, SRE, or equivalent operations-heavy software roles",
       "Strong coding ability (Python, Go, or similar) for automation—not only tickets",
       "Deep experience with monitoring stacks (Prometheus, Grafana, Datadog, New Relic, or similar)",
       "Proven incident leadership and structured problem solving under pressure",
@@ -253,7 +274,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Delivery",
     location: "Lagos · Nigeria · Hybrid / client travel as needed",
     type: "Full-time",
-    compensationNgn: "₦4,500,000 – ₦7,500,000 / year gross",
     summary:
       "Plan and steer complex engineering programs: dependencies, risks, stakeholder communication, and delivery governance—without substituting for engineering judgment.",
     responsibilities: [
@@ -266,7 +286,8 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Ensure documentation and audit artifacts meet client procurement and compliance needs",
     ],
     qualifications: [
-      "Bachelor’s degree; 4+ years in technical project or program management for software delivery",
+      "Minimum 3 years of professional experience in technical project or program management for software delivery",
+      "Bachelor’s degree",
       "Demonstrable understanding of SDLC, testing phases, and deployment pipelines",
       "Strong facilitation, conflict resolution, and stakeholder management skills",
       "Proficiency with Jira, Azure DevOps, or similar; comfortable reading burndowns and velocity trends",
@@ -275,7 +296,7 @@ export const JOB_POSTINGS: JobPosting[] = [
     ],
     preferredQualifications: [
       "PMP, PRINCE2, Scrum Master (CSM), or SAFe credentials",
-      "Experience with fixed-price and T&M commercial models",
+      "Experience with fixed-price and time-and-materials commercial models",
       "Domain experience in financial services, telecom, or public sector",
     ],
   },
@@ -285,7 +306,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Delivery",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦6,000,000 – ₦10,500,000 / year gross",
     summary:
       "Accountable for outcomes across multiple squads: utilization, quality, client satisfaction, and team health—within commercial and contractual guardrails.",
     responsibilities: [
@@ -298,14 +318,15 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Foster psychological safety while maintaining accountability for commitments",
     ],
     qualifications: [
-      "7+ years in professional services, consulting, or product engineering organizations",
-      "3+ years people or delivery leadership for distributed engineering teams",
+      "Minimum 3 years of professional experience in technology delivery, consulting, professional services, or product engineering organizations",
+      "Minimum 3 years of experience leading or co-leading engineering/delivery teams (people, scope, or account accountability)",
       "Strong grasp of software delivery metrics and how they connect to P&L",
       "Experience with enterprise clients, statements of work, and governance cadences",
       "Proven ability to navigate conflict and negotiate tradeoffs with clients and internal teams",
     ],
     preferredQualifications: [
       "MBA or advanced degree in a relevant field",
+      "8+ years total career experience in delivery or consulting leadership",
       "Experience scaling delivery organizations or GCC-style setups",
       "Exposure to Africa/Europe/US client overlap and follow-the-sun models",
     ],
@@ -316,7 +337,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Delivery",
     location: "Lagos · Nigeria · Hybrid",
     type: "Full-time",
-    compensationNgn: "₦8,000,000 – ₦13,000,000 / year gross (principal band)",
     summary:
       "Lead high-ambiguity initiatives: proofs of concept, transformation workstreams, and executive-sponsored programs where the playbook is still being written.",
     responsibilities: [
@@ -328,13 +348,14 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Transition stable outcomes into line operations or BAU teams with clean handover",
     ],
     qualifications: [
-      "10+ years total experience including significant time in consulting or senior delivery leadership",
-      "Demonstrated success owning ambiguous initiatives end-to-end",
+      "Minimum 3 years of professional experience leading complex technology or consulting initiatives end-to-end",
+      "Demonstrated success owning ambiguous initiatives with multiple stakeholders",
       "Strong technical literacy across cloud, data, and application layers",
       "Executive presence and ability to facilitate C-level conversations",
       "Willingness to travel domestically and occasionally internationally",
     ],
     preferredQualifications: [
+      "10+ years total career experience in consulting or senior delivery leadership",
       "Prior Big-4, global systems integrator, or top-tier product company background",
       "Experience with M&A integrations, carve-outs, or large-scale migrations",
     ],
@@ -345,7 +366,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦7,500,000 – ₦12,000,000 / year gross",
     summary:
       "Shape solution design for pursuits and engagements: feasibility, integration, security, cost, and phased roadmaps that clients can defend internally.",
     responsibilities: [
@@ -358,13 +378,14 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Stay current on cloud-native, data, and security patterns relevant to target industries",
     ],
     qualifications: [
-      "8+ years in software architecture, consulting engineering, or principal engineer roles",
+      "Minimum 3 years of professional experience in software architecture, consulting engineering, or principal engineer roles",
       "Breadth across applications, integration, identity, and cloud infrastructure",
       "Strong written communication: proposals, HLD/LLD artifacts, and decision records",
       "Experience with enterprise procurement, vendor evaluation, and proof-of-concept cycles",
       "Comfortable whiteboarding and facilitating technical working sessions",
     ],
     preferredQualifications: [
+      "8+ years total career experience in enterprise technology",
       "Certifications in cloud architecture (e.g. AWS/Azure/GCP professional levels)",
       "Industry vertical depth (financial services, health, energy, or public sector)",
       "Experience with SAP, Oracle, Salesforce, or Microsoft business applications ecosystems at integration level",
@@ -376,7 +397,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦4,000,000 – ₦7,200,000 / year gross",
     summary:
       "Build governed data pipelines and warehouse patterns that analytics and ML teams can trust— with observability, lineage, and cost discipline.",
     responsibilities: [
@@ -389,7 +409,7 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Collaborate on self-service patterns (dbt, metrics layers) where appropriate",
     ],
     qualifications: [
-      "3+ years in data engineering or equivalent (ETL/ELT heavy roles)",
+      "Minimum 3 years of professional experience in data engineering or equivalent (ETL/ELT-heavy roles)",
       "Strong SQL and one major warehouse (Snowflake, BigQuery, Redshift, Databricks, etc.)",
       "Experience with orchestration (Airflow, Dagster, Prefect, or cloud-native schedulers)",
       "Proficiency in Python or Scala for transforms and tooling",
@@ -407,7 +427,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Engineering",
     location: "Lagos · Nigeria · Hybrid / remote",
     type: "Full-time",
-    compensationNgn: "₦2,800,000 – ₦5,200,000 / year gross",
     summary:
       "Raise quality through test automation, tooling, and release gates—embedded with squads to prevent defects rather than only finding them late.",
     responsibilities: [
@@ -420,7 +439,7 @@ export const JOB_POSTINGS: JobPosting[] = [
       "Champion shift-left practices and developer-owned quality culture",
     ],
     qualifications: [
-      "2+ years in QA automation or SDET roles in agile teams",
+      "Minimum 3 years of professional experience in QA automation or SDET roles in agile teams",
       "Strong experience with at least one UI framework (Playwright, Cypress, Selenium) and API testing (REST, Postman, code-first)",
       "Proficiency in TypeScript/JavaScript or Python for test code",
       "Understanding of CI systems and how tests gate merges and releases",
@@ -438,7 +457,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Talent",
     location: "Lagos · Nigeria · Program",
     type: "Internship",
-    compensationNgn: "₦60,000 – ₦120,000 / month stipend (cohort & institution dependent)",
     summary:
       "Structured internship for students in CS, CE, Software Engineering, or related fields—real backlog tasks, mentorship, and feedback toward readiness for full-time pipelines.",
     responsibilities: [
@@ -464,7 +482,6 @@ export const JOB_POSTINGS: JobPosting[] = [
     department: "Talent",
     location: "Nigeria & select regions · Events",
     type: "Program",
-    compensationNgn: "Event-based stipend or volunteer — disclosed per invitation",
     summary:
       "Represent Starlight Labs at universities and community events: career talks, panels, and pipeline-building—professional, inclusive, and aligned to our recruiting standards.",
     responsibilities: [
@@ -475,7 +492,7 @@ export const JOB_POSTINGS: JobPosting[] = [
     ],
     qualifications: [
       "Excellent communication and professionalism in public settings",
-      "Background in technology delivery, talent, or related field",
+      "Background in technology delivery, talent, education, or related field (including strong student leaders where programs allow)",
       "Availability for scheduled events; reliability on commitments",
     ],
     preferredQualifications: [

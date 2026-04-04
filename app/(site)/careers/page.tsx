@@ -8,7 +8,7 @@ import { siteImages } from "@/lib/site-images";
 export const metadata: Metadata = {
   title: "Careers",
   description:
-    "Open roles at Starlight Labs—AI/ML, full stack, backend, frontend, DevOps, delivery, and more. Apply online.",
+    "Open roles at Starlight Labs—engineering, platform, delivery, marketing & social, and talent programs. Apply online.",
 };
 
 export default function CareersIndexPage() {
@@ -120,7 +120,6 @@ export default function CareersIndexPage() {
               <p className="text-sm text-slate-500">
                 {job.department} · {job.location} · {job.type}
               </p>
-              <p className="mt-1 break-words text-sm font-medium text-slate-700">{job.compensationNgn}</p>
             </div>
             <span className="text-sm font-medium text-[#0b5fff]">View role →</span>
           </Link>

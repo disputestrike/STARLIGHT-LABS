@@ -35,8 +35,8 @@ check("at least one SQL migration present", fs.readdirSync(path.join(root, "pris
 check("API careers apply route exists", exists("app/api/careers/apply/route.ts"));
 check("Apply API uses Prisma / DB", read("app/api/careers/apply/route.ts").includes("prisma") && read("app/api/careers/apply/route.ts").includes("@/lib/db"));
 
-check("jobs.ts defines compensationNgn on postings", read("lib/careers/jobs.ts").includes("compensationNgn"));
-check("jobs include Nigerian Naira symbol", read("lib/careers/jobs.ts").includes("₦"));
+check("jobs.ts has Social Media Manager role", read("lib/careers/jobs.ts").includes("social-media-manager"));
+check("jobs.ts does not publish compensationNgn", !read("lib/careers/jobs.ts").includes("compensationNgn"));
 
 check("MarketingShell has Employee footer label", read("components/marketing/MarketingShell.tsx").includes("Employee"));
 check("MarketingShell has no App dashboard link", !read("components/marketing/MarketingShell.tsx").includes("App dashboard"));
@@ -49,8 +49,8 @@ check("About page mentions Nigeria and 2020", aboutTxt.includes("Nigerian") && a
 
 check("NavDropdown component exists (dropdown behavior)", exists("components/marketing/NavDropdown.tsx"));
 
-check("Careers index lists compensation in template", read("app/(site)/careers/page.tsx").includes("compensationNgn"));
-check("Career detail shows compensation block", read("app/(site)/careers/[slug]/page.tsx").includes("Compensation"));
+check("Careers index has no compensation field in listing", !read("app/(site)/careers/page.tsx").includes("compensationNgn"));
+check("Career detail explains experience minimum not salary box", read("app/(site)/careers/[slug]/page.tsx").includes("minimum of three years"));
 
 check("Case studies page has multiple anonymized stories", read("app/(site)/case-studies/page.tsx").includes("anonymized"));
 check("Newsroom has multiple items", (read("app/(site)/news/page.tsx").match(/date:/g) || []).length >= 4);
