@@ -43,9 +43,9 @@ export default function CareerDetailPage({ params }: Props) {
           </>
         ) : (
           <>
-            This role expects a <strong className="text-slate-800">minimum of three years</strong> of relevant professional
-            experience, as reflected in the required qualifications below. Compensation and benefits are discussed with
-            shortlisted candidates only—we do not publish salary ranges on public postings.
+            Experience requirements for this role are set in the <strong className="text-slate-800">required qualifications</strong>{" "}
+            below—some roles ask for more than three years (for example sales leadership). Compensation and benefits are
+            discussed with shortlisted candidates only—we do not publish salary ranges on public postings.
           </>
         )}
       </p>
